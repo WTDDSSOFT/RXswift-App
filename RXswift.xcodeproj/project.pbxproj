@@ -13,6 +13,8 @@
 		EE47574729F93EF600C7F2C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE47574529F93EF600C7F2C0 /* Main.storyboard */; };
 		EE47574929F93EF700C7F2C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE47574829F93EF700C7F2C0 /* Assets.xcassets */; };
 		EE47574C29F93EF700C7F2C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE47574A29F93EF700C7F2C0 /* LaunchScreen.storyboard */; };
+		EE47575729F947DE00C7F2C0 /* LivePreviewViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47575629F947DE00C7F2C0 /* LivePreviewViews.swift */; };
+		EE47575A29F9499100C7F2C0 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47575929F9499100C7F2C0 /* AuthViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		EE47574829F93EF700C7F2C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE47574B29F93EF700C7F2C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE47574D29F93EF700C7F2C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EE47575629F947DE00C7F2C0 /* LivePreviewViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivePreviewViews.swift; sourceTree = "<group>"; };
+		EE47575929F9499100C7F2C0 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,14 +60,10 @@
 		EE47573E29F93EF600C7F2C0 /* RXswift */ = {
 			isa = PBXGroup;
 			children = (
+				EE47575529F947BC00C7F2C0 /* LivePreviewViews */,
 				EE47575429F9411200C7F2C0 /* Auth */,
 				EE47575329F93F7700C7F2C0 /* ListPost */,
-				EE47573F29F93EF600C7F2C0 /* AppDelegate.swift */,
-				EE47574129F93EF600C7F2C0 /* SceneDelegate.swift */,
-				EE47574329F93EF600C7F2C0 /* ViewController.swift */,
-				EE47574529F93EF600C7F2C0 /* Main.storyboard */,
-				EE47574829F93EF700C7F2C0 /* Assets.xcassets */,
-				EE47574A29F93EF700C7F2C0 /* LaunchScreen.storyboard */,
+				EE47575829F9485D00C7F2C0 /* Core */,
 				EE47574D29F93EF700C7F2C0 /* Info.plist */,
 			);
 			path = RXswift;
@@ -79,8 +79,30 @@
 		EE47575429F9411200C7F2C0 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				EE47575929F9499100C7F2C0 /* AuthViewController.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		EE47575529F947BC00C7F2C0 /* LivePreviewViews */ = {
+			isa = PBXGroup;
+			children = (
+				EE47575629F947DE00C7F2C0 /* LivePreviewViews.swift */,
+			);
+			path = LivePreviewViews;
+			sourceTree = "<group>";
+		};
+		EE47575829F9485D00C7F2C0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				EE47573F29F93EF600C7F2C0 /* AppDelegate.swift */,
+				EE47574129F93EF600C7F2C0 /* SceneDelegate.swift */,
+				EE47574329F93EF600C7F2C0 /* ViewController.swift */,
+				EE47574529F93EF600C7F2C0 /* Main.storyboard */,
+				EE47574829F93EF700C7F2C0 /* Assets.xcassets */,
+				EE47574A29F93EF700C7F2C0 /* LaunchScreen.storyboard */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,6 +177,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE47574429F93EF600C7F2C0 /* ViewController.swift in Sources */,
+				EE47575729F947DE00C7F2C0 /* LivePreviewViews.swift in Sources */,
+				EE47575A29F9499100C7F2C0 /* AuthViewController.swift in Sources */,
 				EE47574029F93EF600C7F2C0 /* AppDelegate.swift in Sources */,
 				EE47574229F93EF600C7F2C0 /* SceneDelegate.swift in Sources */,
 			);

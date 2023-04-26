@@ -14,6 +14,16 @@ class ViewController: UIViewController {
       // Do any additional setup after loading the view.
    }
 
-
 }
 
+
+#if DEBUG
+
+import SwiftUI
+
+struct ViewController_Preview: PreviewProvider {
+    static var previews: some View = Preview(for: ViewController())
+        .preferredColorScheme(.light)
+}
+
+#endif
