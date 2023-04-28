@@ -9,7 +9,7 @@ import UIKit
 
 final class AuthView: UIView {
    
-   private lazy var imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
       let imageView = UIImageView(image: UIImage(named: "Login"))
       imageView.clipsToBounds = true
       imageView.contentMode = .scaleToFill
@@ -17,7 +17,7 @@ final class AuthView: UIView {
       return imageView
    }()
 
-   private lazy var userEmail: UITextField = {
+   public lazy var userEmail: UITextField = {
       let textField = UITextField()
       textField.clipsToBounds = true
       textField.layer.backgroundColor = UIColor.darkTextFeild.cgColor
@@ -34,7 +34,7 @@ final class AuthView: UIView {
       return textField
    }()
 
-   private lazy var loginBtn: UIButton = {
+   public lazy var loginBtn: UIButton = {
       let button = UIButton()
       button.setTitle("Login", for: .normal)
       button.setTitleColor(.darkBackground, for: .normal)
@@ -56,6 +56,8 @@ final class AuthView: UIView {
       addSubview(imageView)
       addSubview(userEmail)
       addSubview(loginBtn)
+
+      
    }
 
    required init?(coder: NSCoder) {
@@ -67,8 +69,7 @@ final class AuthView: UIView {
          imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
 
          imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-         imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-
+         
          imageView.heightAnchor.constraint(equalToConstant: 340),
          imageView.widthAnchor.constraint(equalToConstant: 340),
 
@@ -81,4 +82,5 @@ final class AuthView: UIView {
 
       ])
    }
+
 }

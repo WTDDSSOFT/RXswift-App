@@ -17,17 +17,26 @@ class ApiManager {
    
    private var context: NSManagedObjectContext?
 
-   func fetchUser() {
+
+   func fetchUser(completion: @escaping([UserViewModel]?) -> ())  {
       alamofire.request("https://jsonplaceholder.typicode.com/users").response { result in
          switch result.result {
          case .success(let data):
                guard let data = data else { return }
-               print("data\(data.debugDescription)")
                let json = try? JSONDecoder().decode([UserViewModel].self, from: data)
-         case .failure(let error):
-            print("Failed to decode user data \(error.localizedDescription)")
+               completion(json)
+         case .failure(let error): print("Failed to decode user data \(error.localizedDescription)")
          }
       }
    }
 
+   func fetchUserPost(userId: Int) -> () {
+      alamofire.request("https://jsonplaceholder.typicode.com/users/\(userId)").response { result in
+         print(result.result)
+         switch result.result {
+            case .success(let data): break
+            case .failure(let error): print("Failed to decode user data \(error.localizedDescription)")
+         }
+      }
+   }
 }

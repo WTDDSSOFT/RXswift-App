@@ -25,6 +25,7 @@
 		EE47577929F9627D00C7F2C0 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47577829F9627D00C7F2C0 /* UserViewModel.swift */; };
 		EE47577C29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47577B29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift */; };
 		EE47577E29F9A2D600C7F2C0 /* ListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47577D29F9A2D600C7F2C0 /* ListCollectionViewController.swift */; };
+		EEDB46FC29FB30E600993258 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDB46FB29FB30E600993258 /* ListCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		EE47577829F9627D00C7F2C0 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		EE47577B29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JsonCoreData+Extension.swift"; sourceTree = "<group>"; };
 		EE47577D29F9A2D600C7F2C0 /* ListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewController.swift; sourceTree = "<group>"; };
+		EEDB46FB29FB30E600993258 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 		EE47575329F93F7700C7F2C0 /* ListPost */ = {
 			isa = PBXGroup;
 			children = (
+				EEDB46FA29FB30D800993258 /* Cell */,
 				EE47577D29F9A2D600C7F2C0 /* ListCollectionViewController.swift */,
 			);
 			path = ListPost;
@@ -190,6 +193,14 @@
 			path = "JsonToCoreData+Extension";
 			sourceTree = "<group>";
 		};
+		EEDB46FA29FB30D800993258 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EEDB46FB29FB30E600993258 /* ListCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -273,6 +284,7 @@
 				EE47575729F947DE00C7F2C0 /* LivePreviewViews.swift in Sources */,
 				EE47575C29F94AC600C7F2C0 /* AuthView.swift in Sources */,
 				EE47577529F9613F00C7F2C0 /* CoreDataManager.swift in Sources */,
+				EEDB46FC29FB30E600993258 /* ListCollectionViewCell.swift in Sources */,
 				EE47575A29F9499100C7F2C0 /* AuthViewController.swift in Sources */,
 				EE47577729F9614B00C7F2C0 /* ApiManager.swift in Sources */,
 				EE47574029F93EF600C7F2C0 /* AppDelegate.swift in Sources */,
