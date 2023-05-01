@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct UserPostModel: Codable {
+
+   let userId: Int?
+   let id: Int?
+   let title: String?
+   let body: String?
+   
+}

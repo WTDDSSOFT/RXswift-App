@@ -15,8 +15,6 @@ class AuthViewController: UIViewController {
       super.viewDidLoad()
       view.backgroundColor = .darkBackground
       view.addSubview(authView)
-
-      // Do any additional setup after loading the view.
    }
 
    override func viewWillAppear(_ animated: Bool) {
@@ -37,37 +35,37 @@ class AuthViewController: UIViewController {
          height: view.bounds.height)
    }
 
-   private func checkUser(userModel: [UserViewModel]?, userName: String) {
-
-      let findUser = userModel?.filter{ $0.username == userName }
-      print("user find \(findUser)")
-   }
-
-
-   private func configCollection() -> UICollectionViewFlowLayout {
-      let collectionConfiguraiton: UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-
-      collectionConfiguraiton.scrollDirection = .vertical
-      collectionConfiguraiton.minimumLineSpacing = 0
-      collectionConfiguraiton.itemSize = .init(width: view.frame.width, height: view.frame.height)
-      return collectionConfiguraiton
-   }
-
    @objc func didTap(sender: Any) {
+
       guard let userName = authView.userEmail.text,
             !userName.isEmpty else {
          return
       }
       
-      ApiManager().fetchUser { result in
-         self.checkUser(userModel: result, userName: userName)
-         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.navigationController?.pushViewController(ListCollectionViewController.init(
-               collectionViewLayout: self.configCollection()
-            ), animated: true)
-         }
+      ApiManager().fetchUser { userResponse in
+         guard let userResponse = userResponse else { return }
+         self.checkUser(userModel: userResponse, userName: userName)
       }
    }
+}
+
+extension AuthViewController {
+
+   private func configCollection() -> UICollectionViewFlowLayout {
+      let collectionConfiguraiton: UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+      collectionConfiguraiton.scrollDirection = .vertical
+      return collectionConfiguraiton
+   }
+
+   private func checkUser(userModel: [UserModel]?, userName: String) {
+      let findUser = userModel?.filter{ $0.username == userName }
+      let vc = ListCollectionViewController.init(collectionViewLayout: self.configCollection())
+      vc.userVM = userModel
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+         self.navigationController?.pushViewController(vc, animated: true)
+      }
+   }
+
 }
 
 #if DEBUG

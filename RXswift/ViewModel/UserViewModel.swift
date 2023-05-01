@@ -30,28 +30,32 @@ import CoreData
 //
 //}
 
-struct UserViewModel: Codable {
-   var username: String?
-   var phone: String?
-   var name: String?
-   var email: String?
-   var website: String?
-   var id: Int?
-
-   init(
-      username: String? = nil,
-      phone: String? = nil,
-      name: String? = nil,
-      email: String? = nil,
-      website: String? = nil,
-      id: Int? = nil
-   ) {
-      self.username = username
-      self.phone = phone
-      self.name = name
-      self.email = email
-      self.website = website
-      self.id = id
-   }
+public class UserViewModel: NSObject {
    
+   private let model: UserModel
+
+   init(model: UserModel) {
+      self.model = model
+   }
+
+   public var name: String {
+      return model.name ?? ""
+   }
+
+   public var email: String {
+      return model.email ?? ""
+   }
+
+   public var phone: String {
+      return model.phone ?? ""
+   }
+
+   public var website: String {
+      return model.website ?? ""
+   }
+
+   public var companyName: String {
+      return model.company.name ?? ""
+   }
+
 }
