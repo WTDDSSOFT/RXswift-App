@@ -33,11 +33,29 @@ final class AuthView: UIView {
 
       return textField
    }()
+    
+    public lazy var userPassword: UITextField = {
+       let textField = UITextField()
+       textField.clipsToBounds = true
+       textField.layer.backgroundColor = UIColor.darkTextFeild.cgColor
+       textField.placeholder = "  Email"
+       textField.textAlignment = .justified
+       textField.font = .boldSystemFont(ofSize: 14)
+       textField.textColor = .lightGray
+       textField.layer.cornerRadius = 10
+       textField.layer.borderColor = UIColor.lightGray.cgColor
+       textField.layer.borderWidth = 1
+       textField.translatesAutoresizingMaskIntoConstraints = false
+       textField.heightAnchor.constraint(equalToConstant: 48).isActive = true
+
+       return textField
+    }()
 
    public lazy var loginBtn: UIButton = {
       let button = UIButton()
       button.setTitle("Login", for: .normal)
       button.setTitleColor(.darkBackground, for: .normal)
+      button.setTitleColor(.lightGray, for: .disabled)
       button.titleLabel?.font = .boldSystemFont(ofSize: 18)
       button.backgroundColor = UIColor.btnWhite
       button.layer.cornerRadius = 10
@@ -55,6 +73,7 @@ final class AuthView: UIView {
       self.clipsToBounds = true
       addSubview(imageView)
       addSubview(userEmail)
+      addSubview(userPassword)
       addSubview(loginBtn)
 
       
@@ -76,6 +95,10 @@ final class AuthView: UIView {
          userEmail.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 50),
          userEmail.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
          userEmail.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
+         
+         userPassword.topAnchor.constraint(equalTo: userEmail.bottomAnchor, constant: 50),
+         userPassword.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 20),
+         userPassword.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
 
          loginBtn.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
          loginBtn.centerXAnchor.constraint(equalTo: centerXAnchor),

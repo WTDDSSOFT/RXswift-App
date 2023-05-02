@@ -6,19 +6,41 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class AuthViewController: UIViewController {
 
    private let authView = AuthView()
+    private let disposeBag = DisposeBag()
 
    override func viewDidLoad() {
       super.viewDidLoad()
       view.backgroundColor = .darkBackground
       view.addSubview(authView)
+       
+       
+       Observable.combineLatest(
+        self.authView.userEmail.rx.text.asObservable(),
+        self.authView.userPassword.rx.text.asObservable()
+       )
+       
+           .map { currentEmail, currentPassword -> Bool in
+               guard let currentEmail = currentEmail, let currentPassword = currentPassword else { return false}
+               return currentEmail.count > 6 && currentPassword.count > 6
+            
+           }
+           
+           .asDriver(onErrorJustReturn: false)
+           .drive(self.authView.loginBtn.rx.isEnabled).disposed(by: self.disposeBag)
+        
+       
+       
+       
    }
 
    override func viewWillAppear(_ animated: Bool) {
-      authView.loginBtn.isEnabled  = true
+//      authView.loginBtn.isEnabled  = true
       authView.loginBtn.addTarget(
          self,
          action: #selector(didTap),
@@ -46,6 +68,10 @@ class AuthViewController: UIViewController {
          guard let userResponse = userResponse else { return }
          self.checkUser(userModel: userResponse, userName: userName)
       }
+    
+       
+       
+       
    }
 }
 
