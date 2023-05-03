@@ -9,60 +9,26 @@ import UIKit
 
 class ListCollectionViewCell: UICollectionViewCell {
 
-   private lazy var nameLb: UILabel = {
+   private lazy var titleLb: UILabel = {
       let label = UILabel()
       label.numberOfLines = 0
-      label.font = .boldSystemFont(ofSize: 16)
+      label.font = .boldSystemFont(ofSize: 14)
       label.clipsToBounds = true
       label.textColor = .darkTextFeild
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.heightAnchor.constraint(equalToConstant: 20).isActive = true
+      label.heightAnchor.constraint(equalToConstant: 40).isActive = true
       return label
    }()
 
-   private lazy var emailLb: UILabel = {
+   private lazy var bodyLb: UILabel = {
       let label = UILabel()
       label.numberOfLines = 0
       label.font = .systemFont(ofSize: 14)
       label.clipsToBounds = true
       label.textColor = .darkTextFeild
       label.translatesAutoresizingMaskIntoConstraints = false
-      label.heightAnchor.constraint(equalToConstant: 20).isActive = true
-      return label
-   }()
-
-   private lazy var phoneLb: UILabel = {
-      let label = UILabel()
-      label.numberOfLines = 0
-      label.font = .systemFont(ofSize: 14)
-      label.clipsToBounds = true
-      label.textColor = .darkTextFeild
-      label.translatesAutoresizingMaskIntoConstraints = false
-      label.heightAnchor.constraint(equalToConstant: 20).isActive = true
-      return label
-   }()
-
-
-   private lazy var websiteLb: UILabel = {
-      let label = UILabel()
-      label.numberOfLines = 0
-      label.font = .systemFont(ofSize: 14)
-      label.clipsToBounds = true
-      label.textColor = .darkTextFeild
-      label.translatesAutoresizingMaskIntoConstraints = false
-      label.heightAnchor.constraint(equalToConstant: 20).isActive = true
-      return label
-   }()
-
-   private lazy var companyLb: UILabel = {
-      let label = UILabel()
-      label.numberOfLines = 0
-      label.font = .systemFont(ofSize: 14)
-      label.clipsToBounds = true
-      label.textColor = .darkTextFeild
-      label.translatesAutoresizingMaskIntoConstraints = false
-      label.heightAnchor.constraint(equalToConstant: 20).isActive = true
-
+      label.adjustsFontSizeToFitWidth = true
+      label.textAlignment = .justified
       return label
    }()
 
@@ -71,11 +37,8 @@ class ListCollectionViewCell: UICollectionViewCell {
    override init(frame: CGRect) {
       super.init(frame: frame)
 
-      addSubview(nameLb)
-      addSubview(emailLb)
-      addSubview(phoneLb)
-      addSubview(websiteLb)
-      addSubview(companyLb)
+      addSubview(titleLb)
+      addSubview(bodyLb)
 
       contentView.layer.cornerRadius = 5.0
       contentView.layer.masksToBounds = true
@@ -113,30 +76,20 @@ class ListCollectionViewCell: UICollectionViewCell {
 
       NSLayoutConstraint.activate([
          
-         nameLb.topAnchor.constraint(equalTo: topAnchor),
-         nameLb.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
+         titleLb.topAnchor.constraint(equalTo: topAnchor),
+         titleLb.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+         titleLb.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
 
-         emailLb.topAnchor.constraint(equalTo: nameLb.bottomAnchor, constant: 10),
-         emailLb.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
+         bodyLb.topAnchor.constraint(equalTo: titleLb.bottomAnchor, constant: 5),
+         bodyLb.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+         bodyLb.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+         bodyLb.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
 
-         phoneLb.topAnchor.constraint(equalTo: emailLb.bottomAnchor, constant: 10),
-         phoneLb.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
-
-         websiteLb.topAnchor.constraint(equalTo: phoneLb.bottomAnchor, constant: 10),
-         websiteLb.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
-
-         companyLb.topAnchor.constraint(equalTo: websiteLb.bottomAnchor, constant:  5),
-         companyLb.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-         companyLb.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15)
-         
       ])
    }
 
-   public func configCell(userM: UserViewModel) {
-      self.nameLb.text = userM.name
-      self.emailLb.text = userM.email
-      self.phoneLb.text = userM.phone
-      self.websiteLb.text = userM.website
-      self.companyLb.text = userM.companyName
+   public func configCell(userM: UserPostViewModel) {
+      self.titleLb.text = userM.title
+      self.bodyLb.text = userM.body
    }
 }

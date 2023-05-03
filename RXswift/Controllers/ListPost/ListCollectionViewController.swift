@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
+import RxDataSources
 
 final class ListCollectionViewController: UICollectionViewController {
 
-   public var userVM: [UserModel]?
-   private var userPostVM: UserPostViewModel?
+   public var findUser: Int?
+   private var userPostVM: [UserPostModel]?
 
    private func collectionViewSetup () {
 
@@ -36,9 +39,9 @@ final class ListCollectionViewController: UICollectionViewController {
       collectionViewSetup()
 
       DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-         ApiManager.shared.fetchUserPost(userId: (self.userVM?.first?.id)!) { result in
+         ApiManager.shared.fetchUserPost(userId: self.findUser!) { result in
             guard let result = result else { return }
-            self.userPostVM = UserPostViewModel(post: result)
+            self.userPostVM = result
             self.collectionView.reloadData()
          }
       }
@@ -63,7 +66,7 @@ extension ListCollectionViewController {
                                 numberOfItemsInSection section: Int
    ) -> Int {
       // #warning Incomplete implementation, return the number of items
-      return userVM?.count ?? 0
+      return userPostVM?.count ?? 0
    }
 
    override func collectionView(_ collectionView: UICollectionView,
@@ -75,18 +78,25 @@ extension ListCollectionViewController {
          for: indexPath
       ) as! ListCollectionViewCell
 
-      guard let userM = userVM?[indexPath.row] else { return UICollectionViewCell() }
+      guard let userM = userPostVM?[indexPath.row] else { return UICollectionViewCell() }
 
-      cell.configCell(userM: UserViewModel(model: userM))
+      cell.configCell(userM: UserPostViewModel(model: userM))
 
       return cell
    }
 
    override func collectionView(_ collectionView: UICollectionView,
                                 didSelectItemAt indexPath: IndexPath) {
+
       collectionView.cellForItem(at: indexPath)
-      print("select item")
-      navigationController?.pushViewController(UserInfomationViewController(), animated: true)
+      guard let postId = userPostVM?[indexPath.row] else { return }
+      ApiManager.shared.fetchUserPostComment(postd: postId.id ?? 0) { result in
+         guard let result = result else { return }
+         let vc = UserPostCommentsViewController()
+         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.navigationController?.pushViewController(vc, animated: true)
+         }
+      }
    }
 
 }
@@ -100,7 +110,7 @@ extension ListCollectionViewController: UICollectionViewDelegateFlowLayout {
                        sizeForItemAt indexPath: IndexPath
    ) -> CGSize {
 
-      return CGSize(width: collectionView.bounds.size.width - 56, height: 150)
+      return CGSize(width: collectionView.bounds.size.width - 46, height: 150)
    }
 
    func collectionView(_ collectionView: UICollectionView,

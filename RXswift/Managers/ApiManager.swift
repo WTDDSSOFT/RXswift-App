@@ -32,16 +32,34 @@ class ApiManager {
    }
 
    func fetchUserPost(userId: Int,
-                      completion: @escaping(UserPostModel?) -> ()
+                      completion: @escaping([UserPostModel]?) -> ()
    ) {
-      alamofire.request("https://jsonplaceholder.typicode.com/posts/\(userId)").response { result in
+      alamofire.request("https://jsonplaceholder.typicode.com/users/\(userId)/posts").response { result in
+         print(result.response)
          switch result.result {
             case .success(let data):
                guard let data = data else { return }
-               let json = try? JSONDecoder().decode(UserPostModel.self, from: data)
+               let json = try? JSONDecoder().decode([UserPostModel].self, from: data)
+               print("user posts \(json)")
                completion(json)
             case .failure(let error): print("Failed to decode user data \(error.localizedDescription)")
          }
       }
+   }
+
+   func fetchUserPostComment(postd: Int,
+                             completion: @escaping([UserPostComment]?) -> ()) {
+      alamofire.request("https://jsonplaceholder.typicode.com/posts/\(postd)/comments").response { result in
+         print(result.response)
+         switch result.result {
+            case .success(let data):
+               guard let data = data else { return }
+               let json = try? JSONDecoder().decode([UserPostComment].self, from: data)
+               print("user posts \(json)")
+               completion(json)
+            case .failure(let error): print("Failed to decode user data \(error.localizedDescription)")
+         }
+      }
+
    }
 }

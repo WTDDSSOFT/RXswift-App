@@ -8,39 +8,38 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class AuthViewController: UIViewController {
 
    private let authView = AuthView()
-    private let disposeBag = DisposeBag()
+   private let disposeBag = DisposeBag()
 
    override func viewDidLoad() {
       super.viewDidLoad()
       view.backgroundColor = .darkBackground
       view.addSubview(authView)
-       
-       
-       Observable.combineLatest(
-        self.authView.userEmail.rx.text.asObservable(),
-        self.authView.userPassword.rx.text.asObservable()
-       )
-       
-           .map { currentEmail, currentPassword -> Bool in
-               guard let currentEmail = currentEmail, let currentPassword = currentPassword else { return false}
-               return currentEmail.count > 6 && currentPassword.count > 6
-            
-           }
-           
-           .asDriver(onErrorJustReturn: false)
-           .drive(self.authView.loginBtn.rx.isEnabled).disposed(by: self.disposeBag)
-        
-       
-       
-       
+
+
+      self.authView.userEmail.rx.text.map { currentText -> Bool in
+         guard let currentText = currentText else { return false}
+         return currentText.count > 3
+      }
+      .asDriver(onErrorJustReturn: false)
+      .drive(self.authView.loginBtn.rx.isEnabled)
+      .disposed(by: self.disposeBag)
+//
+//       Observable.combineLatest(
+//         self.authView.userEmail.rx.text.asObservable()
+//       ).map { currentEmail  -> Bool in
+//            guard let currentEmail = currentEmail else { return false}
+//            return currentEmail.count > 6
+//        }.asDriver(onErrorJustReturn: false)
+//           .drive(self.authView.loginBtn.rx.isEnabled).disposed(by: self.disposeBag)
    }
 
    override func viewWillAppear(_ animated: Bool) {
-//      authView.loginBtn.isEnabled  = true
+      //      authView.loginBtn.isEnabled  = true
       authView.loginBtn.addTarget(
          self,
          action: #selector(didTap),
@@ -52,7 +51,7 @@ class AuthViewController: UIViewController {
       super.viewDidLayoutSubviews()
       authView.frame = CGRect(
          x: 0,
-         y: view.top,
+         y: view.safeAreaInsets.top,
          width: view.bounds.width,
          height: view.bounds.height)
    }
@@ -68,10 +67,6 @@ class AuthViewController: UIViewController {
          guard let userResponse = userResponse else { return }
          self.checkUser(userModel: userResponse, userName: userName)
       }
-    
-       
-       
-       
    }
 }
 
@@ -86,7 +81,7 @@ extension AuthViewController {
    private func checkUser(userModel: [UserModel]?, userName: String) {
       let findUser = userModel?.filter{ $0.username == userName }
       let vc = ListCollectionViewController.init(collectionViewLayout: self.configCollection())
-      vc.userVM = userModel
+      vc.findUser = findUser?.first?.id
       DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
          self.navigationController?.pushViewController(vc, animated: true)
       }
