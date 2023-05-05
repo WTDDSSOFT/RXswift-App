@@ -40,6 +40,7 @@ final class ListCollectionViewController: UICollectionViewController {
 
       DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
          ApiManager.shared.fetchUserPost(userId: self.findUser!) { result in
+             print(self.findUser)
             guard let result = result else { return }
             self.userPostVM = result
             self.collectionView.reloadData()
@@ -90,9 +91,9 @@ extension ListCollectionViewController {
 
       collectionView.cellForItem(at: indexPath)
       guard let postId = userPostVM?[indexPath.row] else { return }
-      ApiManager.shared.fetchUserPostComment(postd: postId.id ?? 0) { result in
-         guard let result = result else { return }
+      ApiManager.shared.fetchUserPostComment(postID: postId.id ?? 0) { result in
          let vc = UserPostCommentsViewController()
+          
          DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.navigationController?.pushViewController(vc, animated: true)
          }

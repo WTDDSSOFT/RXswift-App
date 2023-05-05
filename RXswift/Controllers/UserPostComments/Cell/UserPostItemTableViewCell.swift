@@ -37,7 +37,7 @@ class UserPostItemTableViewCell: UITableViewCell {
 // MARK: - Configuration
 extension UserPostItemTableViewCell {
     private func configure() {
-        self.titleLabel.text = viewModel.title
+        self.titleLabel.text = viewModel.name
     }
 }
 

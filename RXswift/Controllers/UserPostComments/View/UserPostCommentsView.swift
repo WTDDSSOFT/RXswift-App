@@ -54,6 +54,7 @@ final class UserPostCommentsView: UIView {
    override init(frame: CGRect) {
       super.init(frame: frame)
       self.clipsToBounds = true
+       
       addSubview(containerView)
       containerView.addSubview(nameLb)
       containerView.addSubview(emailLb)

@@ -9,29 +9,23 @@ import RxSwift
 
 struct UsePostCommentsViewModel {
 
-    var items = BehaviorSubject<[TableViewSection]>(value: [
-        TableViewSection(items: [
-            TableViewItem(title: "One"),
-            TableViewItem(title: "Two"),
-            TableViewItem(title: "Three"),
-            TableViewItem(title: "Four"),
-            TableViewItem(title: "Five"),
-            TableViewItem(title: "Six")
+    var items = BehaviorSubject<[MainTableViewSection]>(value: [
+        MainTableViewSection(items: [
+            MainDataSourceData(
+                name: "test mock",
+                body: "jsdfnakjsdngjasngjkansdgjsdjgn;ajsd",
+                email: "any_email@gmail.com"
+            ),
+        ]),
 
-        ], header: "First section"),
-
-        TableViewSection(items: [
-
-            TableViewItem(title: "Seven"),
-            TableViewItem(title: "Eight"),
-            TableViewItem(title: "Nine"),
-            TableViewItem(title: "Ten"),
-            TableViewItem(title: "Evelen"),
-            TableViewItem(title: "Twelve")
-
-        ], header: "Second section")
+        MainTableViewSection(items: [
+            MainDataSourceData(
+                name: "test mock 2",
+                body: "jsdfnakjsdngjasngjkansdgjsdjgn;ajsd",
+                email: "any_email2@gmail.com"
+            ),
+        ])
 
     ])
-
-    let dataSource = IntermediateDataSource.dataSource()
 }
+

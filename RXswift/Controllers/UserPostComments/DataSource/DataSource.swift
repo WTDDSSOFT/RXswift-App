@@ -7,45 +7,36 @@
 
 import RxDataSources
 
-struct TableViewItem {
-    let title: String
+struct MainDataSourceData {
 
-    init(title: String) {
-        self.title = title
+    let name: String?
+    let body: String?
+    let email: String?
+
+    init(
+        name: String?,
+        body: String?,
+        email: String?
+    ) {
+        self.name = name
+        self.body = body
+        self.email = email
     }
 }
 
-struct TableViewSection {
-    let items: [TableViewItem]
-    let header: String
+struct MainTableViewSection {
 
-    init(items: [TableViewItem], header: String) {
+    let items: [MainDataSourceData]
+
+    init(items: [MainDataSourceData]) {
         self.items = items
-        self.header = header
     }
 }
 
-extension TableViewSection: SectionModelType {
-    typealias Item = TableViewItem
+extension MainTableViewSection: SectionModelType {
+    typealias Item = MainDataSourceData
 
     init(original: Self, items: [Self.Item]) {
         self = original
     }
 }
-
-struct IntermediateDataSource {
-
-    typealias DataSource = RxTableViewSectionedReloadDataSource
-
-    static func dataSource() -> DataSource<TableViewSection> {
-        return .init(configureCell: { dataSource, tableView, indexPath, item -> UITableViewCell in
-
-            let cell = UserPostItemTableViewCell()
-            cell.viewModel = UserPostCommentsItemViewModel(itemModel: item)
-            return cell
-        }, titleForHeaderInSection: { dataSource, index in
-            return dataSource.sectionModels[index].header
-        })
-    }
-}
-

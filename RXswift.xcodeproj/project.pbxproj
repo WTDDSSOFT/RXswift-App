@@ -39,6 +39,7 @@
 		EEA00EE62A029F8B0090691D /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA00EE52A029F8B0090691D /* DataSource.swift */; };
 		EEA00EE82A02A00C0090691D /* UserPostCommentsItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA00EE72A02A00C0090691D /* UserPostCommentsItemViewModel.swift */; };
 		EEA00EEB2A02A1930090691D /* UserPostItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA00EEA2A02A1930090691D /* UserPostItemTableViewCell.swift */; };
+		EEA221342A0448E90086DB68 /* MoyaApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA221332A0448E90086DB68 /* MoyaApi.swift */; };
 		EEDB46FC29FB30E600993258 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDB46FB29FB30E600993258 /* ListCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 		EEA00EE52A029F8B0090691D /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		EEA00EE72A02A00C0090691D /* UserPostCommentsItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostCommentsItemViewModel.swift; sourceTree = "<group>"; };
 		EEA00EEA2A02A1930090691D /* UserPostItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostItemTableViewCell.swift; sourceTree = "<group>"; };
+		EEA221332A0448E90086DB68 /* MoyaApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaApi.swift; sourceTree = "<group>"; };
 		EEDB46FB29FB30E600993258 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
 		F6187D1564E53E2F07A2C072 /* Pods_RXswift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RXswift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -238,6 +240,7 @@
 			children = (
 				EE47577429F9613F00C7F2C0 /* CoreDataManager.swift */,
 				EE47577629F9614B00C7F2C0 /* ApiManager.swift */,
+				EEA221332A0448E90086DB68 /* MoyaApi.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				EE749EED29FD9B68008C56D2 /* User.swift in Sources */,
 				EE47575C29F94AC600C7F2C0 /* AuthView.swift in Sources */,
 				EE47577529F9613F00C7F2C0 /* CoreDataManager.swift in Sources */,
+				EEA221342A0448E90086DB68 /* MoyaApi.swift in Sources */,
 				EEA00EE82A02A00C0090691D /* UserPostCommentsItemViewModel.swift in Sources */,
 				EEA00EEB2A02A1930090691D /* UserPostItemTableViewCell.swift in Sources */,
 				EEDB46FC29FB30E600993258 /* ListCollectionViewCell.swift in Sources */,

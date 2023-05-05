@@ -8,10 +8,10 @@
 import Foundation
 
 struct UserPostCommentsItemViewModel {
-   var title: String
+   var name: String?
 
-   init(itemModel: TableViewItem) {
-      self.title = itemModel.title
+   init(itemModel: MainDataSourceData) {
+      self.name = itemModel.name
    }
 }
 

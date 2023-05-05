@@ -6,60 +6,77 @@
 //
 
 import Foundation
-import Alamofire
 import CoreData
+import Moya
 
-class ApiManager {
+final public class ApiManager {
 
-   static let shared = ApiManager()
+    static let shared = ApiManager()
 
-   private var alamofire = AF
-   
-   private var context: NSManagedObjectContext?
+    private var context: NSManagedObjectContext?
 
+    private let endpointClosure = { (target: MyService) -> Endpoint in
+        return Endpoint(
+            url: URL(target: target).absoluteString,
+            sampleResponseClosure: {.networkResponse(200, target.sampleData)},
+            method: target.method,
+            task: target.task,
+            httpHeaderFields: target.headers
+        )
+    }
+}
 
-   func fetchUser(completion: @escaping([UserModel]?) -> ())  {
-      alamofire.request("https://jsonplaceholder.typicode.com/users").response { result in
-         switch result.result {
-         case .success(let data):
-               guard let data = data else { return }
-               let json = try? JSONDecoder().decode([UserModel].self, from: data)
-               print(json?.count)
-               completion(json)
-         case .failure(let error): print("Failed to decode user data \(error.localizedDescription)")
-         }
-      }
-   }
+// MARK: - Fetch USERS ,POST, COMMENTS
 
-   func fetchUserPost(userId: Int,
-                      completion: @escaping([UserPostModel]?) -> ()
-   ) {
-      alamofire.request("https://jsonplaceholder.typicode.com/users/\(userId)/posts").response { result in
-         print(result.response)
-         switch result.result {
-            case .success(let data):
-               guard let data = data else { return }
-               let json = try? JSONDecoder().decode([UserPostModel].self, from: data)
-               print("user posts \(json)")
-               completion(json)
+extension ApiManager {
+
+    func fetchUser(completion: @escaping([UserModel]?) -> ())  {
+        let provider = MoyaProvider(endpointClosure: endpointClosure)
+
+        provider.request(.users) { result in
+            switch result {
+            case .success(let moyaResponse):
+                let data = moyaResponse.data // Data, your JSON response is probably in here!
+                let statusCode = moyaResponse.statusCode // Int - 200, 401, 500, etc
+                let json = try? JSONDecoder().decode([UserModel].self, from: data)
+                print("Success to fetchUser -> \(String(describing: json))")
+
+                completion(json)
             case .failure(let error): print("Failed to decode user data \(error.localizedDescription)")
-         }
-      }
-   }
+            }
+        }
+    }
 
-   func fetchUserPostComment(postd: Int,
-                             completion: @escaping([UserPostComment]?) -> ()) {
-      alamofire.request("https://jsonplaceholder.typicode.com/posts/\(postd)/comments").response { result in
-         print(result.response)
-         switch result.result {
-            case .success(let data):
-               guard let data = data else { return }
-               let json = try? JSONDecoder().decode([UserPostComment].self, from: data)
-               print("user posts \(json)")
-               completion(json)
+    func fetchUserPost(userId: Int, completion: @escaping([UserPostModel]?) -> ()) {
+        let provider = MoyaProvider(endpointClosure: endpointClosure)
+
+        provider.request(.showPostByUserId(userId: userId)) { result in
+            switch result {
+            case .success(let moyaResponse):
+                let data = moyaResponse.data // Data, your JSON response is probably in here!
+                let statusCode = moyaResponse.statusCode // Int - 200, 401, 500, etc
+                let json = try? JSONDecoder().decode([UserPostModel].self, from: data)
+                print("Success to fetchUserPost -> \(String(describing: json))")
+
+                completion(json)
             case .failure(let error): print("Failed to decode user data \(error.localizedDescription)")
-         }
-      }
+            }
+        }
+    }
 
-   }
+    func fetchUserPostComment(postID: Int, completion: @escaping([UserPostComment]?) -> ()) {
+        let provider = MoyaProvider(endpointClosure: endpointClosure)
+
+        provider.request(.showPostCommentsByUserPostId(postId: postID)) { result in
+            switch result {
+            case .success(let moyaResponse):
+                let data = moyaResponse.data // Data, your JSON response is probably in here!
+                let statusCode = moyaResponse.statusCode // Int - 200, 401, 500, etc
+                let json = try? JSONDecoder().decode([UserPostComment].self, from: data)
+                print("Success to fetchUserPostComment -> \(String(describing: json))")
+                completion(json)
+            case .failure(let error): print("Failed to decode user data \(error.localizedDescription)")
+            }
+        }
+    }
 }
