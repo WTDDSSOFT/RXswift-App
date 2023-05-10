@@ -7,36 +7,42 @@
 
 import RxDataSources
 
-struct MainDataSourceData {
+public struct SectionModel<Section, ItemType> {
 
-    let name: String?
-    let body: String?
-    let email: String?
+    public var model: Section
+    public var items: [Item]
 
-    init(
-        name: String?,
-        body: String?,
-        email: String?
-    ) {
-        self.name = name
-        self.body = body
-        self.email = email
-    }
-}
-
-struct MainTableViewSection {
-
-    let items: [MainDataSourceData]
-
-    init(items: [MainDataSourceData]) {
+    public init(model: Section, items: [Item]) {
+        self.model = model
         self.items = items
     }
 }
 
-extension MainTableViewSection: SectionModelType {
-    typealias Item = MainDataSourceData
+extension SectionModel: SectionModelType {
 
-    init(original: Self, items: [Self.Item]) {
-        self = original
+    public typealias Identity = Section
+    public typealias Item = ItemType
+
+    public var identity: Section {
+        return model
+    }
+
+    public init(
+        original: SectionModel<Section, ItemType>,
+        items: [ItemType]
+    ) {
+        self.model = original.model
+        self.items = items
     }
 }
+
+//
+//struct MainTableViewSection {
+//
+//    let items: [MainDataSourceData]
+//
+//    init(items: [MainDataSourceData]) {
+//        self.items = items
+//    }
+//}
+//

@@ -10,9 +10,9 @@ import RxDataSources
 import RxSwift
 import RxCocoa
 
-class UserPostCommentsViewController: UIViewController {
+class UserPostCommentsViewController: UIViewController, UIScrollViewDelegate {
 
-    private var userPostCommentVM = UsePostCommentsViewModel()
+    private var userPostCommentVM:UserPostComment!
     private let disposeBag = DisposeBag()
 
     private lazy var tableView: UITableView = {
@@ -32,7 +32,7 @@ class UserPostCommentsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         setupUi()
-        setupTableView()
+//        setupTableView()
     }
 
     override func viewDidLayoutSubviews() {
@@ -45,10 +45,10 @@ class UserPostCommentsViewController: UIViewController {
     }
 
 //MARK: - DATASOURCE RXSWIFT
-    lazy var dataSource: RxTableViewSectionedReloadDataSource<MainTableViewSection> = {
+    lazy var dataSource: RxTableViewSectionedReloadDataSource<SectionModel<Void, UserPostComment>> = {
         return .init(configureCell: { dataSource, tableView, indexPath, item -> UITableViewCell in
             let cell = UserPostItemTableViewCell()
-            cell.viewModel = UserPostCommentsItemViewModel(itemModel: item)
+            cell.titleLabel.text = item.name
             return cell
         })
     }()
@@ -57,18 +57,15 @@ class UserPostCommentsViewController: UIViewController {
 
 extension UserPostCommentsViewController {
 
-    func setupTableView() {
-        userPostCommentVM.items
-            .bind(to: tableView
-                .rx
-                .items(dataSource: dataSource)
-            )
-            .disposed(by: disposeBag)
-    }
+//    func setupTableView() {
+//        let input = UserPostCommentsItemViewModel.Input(allPostComments: )
+//        let viewModel = UserPostCommentsItemViewModel(postComments: self.userPostCommentVM)
+//        let outPut = viewModel.bind(input: input )
+//    }
 
 
     private func setupUi() {
-
+        self.tableView.rx.setDelegate(self).disposed(by: self.disposeBag)
         self.navigationItem.title = "Comments"
         self.view.backgroundColor = .darkBackground
         self.view.addSubview(tableView)

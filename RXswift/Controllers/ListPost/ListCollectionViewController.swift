@@ -13,7 +13,7 @@ import RxDataSources
 final class ListCollectionViewController: UICollectionViewController {
 
    public var findUser: Int?
-   private var userPostVM: [UserPostModel]?
+   private var userPostVM: [UserPost]?
 
    private func collectionViewSetup () {
 
@@ -40,7 +40,6 @@ final class ListCollectionViewController: UICollectionViewController {
 
       DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
          ApiManager.shared.fetchUserPost(userId: self.findUser!) { result in
-             print(self.findUser)
             guard let result = result else { return }
             self.userPostVM = result
             self.collectionView.reloadData()

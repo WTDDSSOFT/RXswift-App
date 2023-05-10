@@ -6,12 +6,33 @@
 //
 
 import Foundation
+import RxCocoa
+import RxSwift
+import RxDataSources
 
-struct UserPostCommentsItemViewModel {
-   var name: String?
+final class UserPostCommentsItemViewModel: ViewModel {
 
-   init(itemModel: MainDataSourceData) {
-      self.name = itemModel.name
-   }
+    var postComments: UserPostComment!
+
+    struct Input {
+        let allPostComments: Observable<Void>
+    }
+
+    struct Output {
+        let userPostCommentsToShow: Driver<[SectionModel<Void, UserPostComment>]>
+    }
+
+    convenience init(postComments: UserPostComment) {
+        self.init()
+        self.postComments = postComments
+    }
+
+    func bind(input: Input) -> Output {
+        let postComments: Observable<[SectionModel<Void, UserPostComment>]> = input.allPostComments
+            .map {
+                [SectionModel(model: (), items: [self.postComments])]
+            }
+        return Output(userPostCommentsToShow: postComments.asDriver(onErrorJustReturn: []))
+    }
 }
 

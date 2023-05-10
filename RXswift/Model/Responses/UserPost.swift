@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserPostModel: Codable {
+struct UserPost: Codable {
 
    let userId: Int?
    let id: Int?

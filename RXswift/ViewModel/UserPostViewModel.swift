@@ -9,9 +9,9 @@ import Foundation
 
 public class UserPostViewModel: NSObject {
 
-  private let model: UserPostModel
+  private let model: UserPost
 
-   init(model: UserPostModel) {
+   init(model: UserPost) {
       self.model = model
    }
 
