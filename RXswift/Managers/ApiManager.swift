@@ -60,6 +60,32 @@ extension ApiManager: Api {
         }
     }
     
+    func fetchUserv1_5() -> Observable<[UserModel]> {
+        return Observable<[UserModel]>.create { observer in
+            self.provider.request(.users) { (result)  in
+                switch result {
+                    case .success(let response):
+                        guard let jsonData = try? JSONDecoder().decode([UserModel].self, from: response.data) else {
+                            return
+                        }
+                    return observer.onNext(jsonData)
+                    case .failure(let error):
+                        print("Failed to decode UserModel data \(error.localizedDescription)")
+                    observer.onError(error)
+                }
+            }
+            return Disposables.create {}
+        }
+    }
+    
+    func fetchUserv2() -> Observable<[UserModel]> {
+        self.provider.rx.request(.users)
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+            .filterSuccessfulStatusCodes()
+            .map([UserModel].self)
+            .asObservable()
+    }
+    
     func fetchUserPost(userId: Int) -> Single<[UserPost]> {
         return Single<[UserPost]>.create { single in
             self.provider.request(.showPostByUserId(userId: userId)) { (result) in
@@ -96,6 +122,14 @@ extension ApiManager: Api {
             }
             return Disposables.create { }
         }
+    }
+    
+    func fetchUserPostCommentv2(postID: Int) -> Observable<[UserPostComment]> {
+        self.provider.rx.request(.showPostCommentsByUserPostId(postId: postID))
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+            .filterSuccessfulStatusCodes()
+            .map([UserPostComment].self)
+            .asObservable()
     }
 
 }

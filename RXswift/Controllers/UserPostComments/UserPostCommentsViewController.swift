@@ -10,29 +10,61 @@ import RxDataSources
 import RxSwift
 import RxCocoa
 
-class UserPostCommentsViewController: UIViewController, UIScrollViewDelegate {
+class UserPostCommentsViewController: UIViewController {
 
-    private var userPostCommentVM:UserPostComment!
+    var postId: Int!
     private let disposeBag = DisposeBag()
-
+    var refreshControl: UIRefreshControl!
+    
+    convenience init(postId: Int!) {
+        self.init()
+        self.postId = postId
+    }
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.rowHeight = 70
         tableView.backgroundColor = .darkBackground
         tableView .translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self,
-                           forCellReuseIdentifier: UITableViewCell.reuseIdentifier())
+        tableView.register(UserPostItemTableViewCell.self,
+                           forCellReuseIdentifier: UserPostItemTableViewCell.identifier)
         tableView.tableFooterView = UIView()
+        
+        
+        
+        
+        
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.tintColor = .white
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Loading...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        self.tableView.refreshControl = refreshControl
+        
+        //self.refreshControl.rx.controlEvent(.valueChanged).filter({[weak self] _ in self?.refreshControl.isRefreshing ?? false})
+        let input = UserPostCommentsViewModel.Input(
+            refresh: self.refreshControl.rx.controlEvent(.valueChanged).filter({[weak self] _ in self?.refreshControl.isRefreshing ?? false}).startWith(())
+        )
+        
+        let viewModel = UserPostCommentsViewModel(postId: postId)
+        let output = viewModel.bind(input: input)
+
+        output.postList
+            .drive(self.tableView.rx.items(dataSource: dataSource))
+            .disposed(by: self.disposeBag)
+        
+        output.isLoading
+            .drive(self.refreshControl.rx.isRefreshing).disposed(by: self.disposeBag)
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
         setupUi()
-//        setupTableView()
+
     }
 
     override func viewDidLayoutSubviews() {
@@ -47,8 +79,8 @@ class UserPostCommentsViewController: UIViewController, UIScrollViewDelegate {
 //MARK: - DATASOURCE RXSWIFT
     lazy var dataSource: RxTableViewSectionedReloadDataSource<SectionModel<Void, UserPostComment>> = {
         return .init(configureCell: { dataSource, tableView, indexPath, item -> UITableViewCell in
-            let cell = UserPostItemTableViewCell()
-            cell.titleLabel.text = item.name
+            let cell = tableView.dequeueReusableCell(withIdentifier: UserPostItemTableViewCell.identifier) as! UserPostItemTableViewCell
+            cell.configure(with: item)
             return cell
         })
     }()
@@ -81,4 +113,11 @@ extension UserPostCommentsViewController {
         ])
     }
 
+}
+
+extension UserPostCommentsViewController: UITableViewDelegate{
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
 }

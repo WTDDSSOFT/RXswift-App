@@ -10,6 +10,7 @@ target 'RXswift' do
   pod 'RxCocoa'
   pod 'RxDataSources'
   pod 'Moya'
+  pod 'Moya/RxSwift'
   pod 'Alamofire'
 
 end

@@ -26,7 +26,7 @@ extension MyService: TargetType {
         case .showPostByUserId(userId: let userID):
             return "/users/\(userID)/posts"
         case .showPostCommentsByUserPostId(postId: let postID):
-            return "posts/\(postID)/comments"
+            return "/posts/\(postID)/comments"
         }
     }
 

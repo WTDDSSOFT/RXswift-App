@@ -14,5 +14,4 @@ struct UserPostComment: Codable {
    let name: String?
    let body: String?
    let email: String?
-    
 }

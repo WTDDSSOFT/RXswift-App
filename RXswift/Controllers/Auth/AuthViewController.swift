@@ -63,16 +63,26 @@ class AuthViewController: UIViewController {
               !userName.isEmpty else {
             return
         }
+        
+    
+        self.apiManager.fetchUserv1_5().subscribe (onNext: { userResponse in
+            print("Success to fetchUser -> \(String(describing: userResponse))")
+                self.checkUser(userResponse, userName)
+        }, onError: { error in
+            print(error)
+        }).disposed(by: self.disposeBag)
 
-        self.apiManager.fetchUser().subscribe { user in
-            switch user {
-            case .success(let userResponse):
-                print("Success to fetchUser -> \(String(describing: user))")
-                    self.checkUser(userResponse, userName)
-            case .failure(let error):
-                print(error)
-            }
-        }.disposed(by: disposeBag)
+            
+            
+            
+//            switch user {
+//            case .success(let userResponse):
+//                print("Success to fetchUser -> \(String(describing: user))")
+//                    self.checkUser(userResponse, userName)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }.disposed(by: disposeBag)
     }
 }
 

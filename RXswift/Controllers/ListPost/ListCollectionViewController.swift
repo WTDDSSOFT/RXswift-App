@@ -99,18 +99,29 @@ extension ListCollectionViewController {
 
         collectionView.cellForItem(at: indexPath)
         guard let postId = userPostVM?[indexPath.row] else { return }
-        api.fetchUserPostComment(postID: postId.id ?? 0).subscribe{ result in
-            switch result {
-            case .success(let userPostComments):
-                let vc = UserPostCommentsViewController()
-                print("success to get data \(userPostComments)")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-            case .failure(let error):
-                print("Failure to decode  userPostComments data \(error.localizedDescription)")
-            }
-        }.disposed(by: self.disposeBag)
+        
+        let vc = UserPostCommentsViewController(postId: postId.id)
+        
+        
+//
+        self.navigationController?.pushViewController(vc, animated: true)
+//
+//
+//        api.fetchUserPostComment(postID: postId.id ?? 0).subscribe{ result in
+//            switch result {
+//            case .success(let userPostComments):
+//                let vc = UserPostCommentsViewController(userPostCommentVM: userPostComments)
+//
+//
+//
+//                print("success to get data \(userPostComments)")
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                    self.navigationController?.pushViewController(vc, animated: true)
+//                }
+//            case .failure(let error):
+//                print("Failure to decode  userPostComments data \(error.localizedDescription)")
+//            }
+//        }.disposed(by: self.disposeBag)
     }
 
 }

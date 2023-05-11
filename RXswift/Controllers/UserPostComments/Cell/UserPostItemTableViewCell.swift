@@ -8,6 +8,7 @@
 import UIKit
 
 class UserPostItemTableViewCell: UITableViewCell {
+    static let identifier = "UserPostItemTableViewCell"
 
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -20,12 +21,6 @@ class UserPostItemTableViewCell: UITableViewCell {
     }
 
     // MARK: - Properties
-    var viewModel: UserPostCommentsItemViewModel! {
-        didSet {
-            self.configure()
-        }
-    }
-
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -36,8 +31,8 @@ class UserPostItemTableViewCell: UITableViewCell {
 
 // MARK: - Configuration
 extension UserPostItemTableViewCell {
-    private func configure() {
-//        self.titleLabel.text = viewModel
+    func configure(with model: UserPostComment) {
+        self.titleLabel.text = model.body
     }
 }
 
