@@ -13,6 +13,8 @@ import RxCocoa
 
 protocol Api {
     func fetchUser() -> Single<[UserModel]>
+    func fetchUserPost(userId: Int) -> Single<[UserPost]>
+    func fetchUserPostComment(postID: Int) -> Single<[UserPostComment]>
 }
 
 final public class ApiManager {
@@ -31,7 +33,7 @@ final public class ApiManager {
         )
     }
 
-   private lazy var provider: MoyaProvider = {
+    private lazy var provider: MoyaProvider = {
         return MoyaProvider(endpointClosure: endpointClosure)
     }()
 }
@@ -50,7 +52,7 @@ extension ApiManager: Api {
                         }
                         single(.success(jsonData))
                     case .failure(let error):
-                        print(error)
+                        print("Failed to decode UserModel data \(error.localizedDescription)")
                         single(.failure(error))
                 }
             }
@@ -58,34 +60,42 @@ extension ApiManager: Api {
         }
     }
     
-    func fetchUserPost(userId: Int, completion: @escaping([UserPost]?) -> ()) {
-
-        self.provider.request(.showPostByUserId(userId: userId)) { result in
-            switch result {
-                case .success(let moyaResponse):
-                    let data = moyaResponse.data // Data, your JSON response is probably in here!
-                    let statusCode = moyaResponse.statusCode // Int - 200, 401, 500, etc
-                    let json = try? JSONDecoder().decode([UserPost].self, from: data)
+    func fetchUserPost(userId: Int) -> Single<[UserPost]> {
+        return Single<[UserPost]>.create { single in
+            self.provider.request(.showPostByUserId(userId: userId)) { (result) in
+                switch result {
+                case .success(let response):
+                    guard let json = try? JSONDecoder().decode([UserPost].self, from: response.data) else  {
+                        return
+                    }
                     print("Success to fetchUserPost -> \(String(describing: json))")
-                    
-                    completion(json)
-                case .failure(let error): print("Failed to decode user data \(error.localizedDescription)")
+                    single(.success(json))
+                case .failure(let error):
+                    print("Failed to decode UserPost data \(error.localizedDescription)")
+                    single(.failure(error))
+                }
             }
+            return Disposables.create { }
         }
     }
     
-    func fetchUserPostComment(postID: Int, completion: @escaping([UserPostComment]?) -> ()) {
-
-        self.provider.request(.showPostCommentsByUserPostId(postId: postID)) { result in
-            switch result {
-                case .success(let moyaResponse):
-                    let data = moyaResponse.data // Data, your JSON response is probably in here!
-                    let statusCode = moyaResponse.statusCode // Int - 200, 401, 500, etc
-                    let json = try? JSONDecoder().decode([UserPostComment].self, from: data)
+    func fetchUserPostComment(postID: Int) -> Single<[UserPostComment]> {
+        return Single<[UserPostComment]>.create { single in
+            self.provider.request(.showPostCommentsByUserPostId(postId: postID)) { (result) in
+                switch result {
+                case .success(let response):
+                        guard let json = try? JSONDecoder().decode([UserPostComment].self, from: response.data) else {
+                            return
+                        }
                     print("Success to fetchUserPostComment -> \(String(describing: json))")
-                    completion(json)
-                case .failure(let error): print("Failed to decode user data \(error.localizedDescription)")
+                    single(.success(json))
+                case .failure(let error):
+                    print("Failed to decode user data \(error.localizedDescription)")
+                    single(.failure(error))
+                }
             }
+            return Disposables.create { }
         }
     }
+
 }
