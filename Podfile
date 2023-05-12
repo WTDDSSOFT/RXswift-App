@@ -12,5 +12,5 @@ target 'RXswift' do
   pod 'Moya'
   pod 'Moya/RxSwift'
   pod 'Alamofire'
-
+  pod 'SkeletonView'
 end

@@ -37,9 +37,12 @@
 		EEA00EE62A029F8B0090691D /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA00EE52A029F8B0090691D /* DataSource.swift */; };
 		EEA00EEB2A02A1930090691D /* UserPostItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA00EEA2A02A1930090691D /* UserPostItemTableViewCell.swift */; };
 		EEA221342A0448E90086DB68 /* MoyaApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA221332A0448E90086DB68 /* MoyaApi.swift */; };
+		EEAF58E92A0EE1F800CF843F /* ListPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAF58E72A0EE1F800CF843F /* ListPostViewController.swift */; };
+		EEAF58EA2A0EE1F800CF843F /* ListPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEAF58E82A0EE1F800CF843F /* ListPostViewController.xib */; };
 		EECBE14A2A09AE6400D22E53 /* ApiManagerParses.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECBE1492A09AE6400D22E53 /* ApiManagerParses.swift */; };
 		EEDB46FC29FB30E600993258 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDB46FB29FB30E600993258 /* ListCollectionViewCell.swift */; };
 		EEEFAADC2A0E384C00E65AC5 /* UserPostCommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEFAADB2A0E384C00E65AC5 /* UserPostCommentsViewModel.swift */; };
+		EEEFAAE22A0E578800E65AC5 /* ListCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEEFAAE12A0E578800E65AC5 /* ListCollectionViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,9 +79,12 @@
 		EEA00EE52A029F8B0090691D /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		EEA00EEA2A02A1930090691D /* UserPostItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostItemTableViewCell.swift; sourceTree = "<group>"; };
 		EEA221332A0448E90086DB68 /* MoyaApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaApi.swift; sourceTree = "<group>"; };
+		EEAF58E72A0EE1F800CF843F /* ListPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPostViewController.swift; sourceTree = "<group>"; };
+		EEAF58E82A0EE1F800CF843F /* ListPostViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListPostViewController.xib; sourceTree = "<group>"; };
 		EECBE1492A09AE6400D22E53 /* ApiManagerParses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManagerParses.swift; sourceTree = "<group>"; };
 		EEDB46FB29FB30E600993258 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
 		EEEFAADB2A0E384C00E65AC5 /* UserPostCommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPostCommentsViewModel.swift; path = RXswift/ViewModel/UserPostCommentsViewModel.swift; sourceTree = SOURCE_ROOT; };
+		EEEFAAE12A0E578800E65AC5 /* ListCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListCollectionViewController.xib; sourceTree = "<group>"; };
 		F6187D1564E53E2F07A2C072 /* Pods_RXswift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RXswift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -148,6 +154,9 @@
 			children = (
 				EEDB46FA29FB30D800993258 /* Cell */,
 				EE47577D29F9A2D600C7F2C0 /* ListCollectionViewController.swift */,
+				EEEFAAE12A0E578800E65AC5 /* ListCollectionViewController.xib */,
+				EEAF58E72A0EE1F800CF843F /* ListPostViewController.swift */,
+				EEAF58E82A0EE1F800CF843F /* ListPostViewController.xib */,
 			);
 			path = ListPost;
 			sourceTree = "<group>";
@@ -381,9 +390,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEEFAAE22A0E578800E65AC5 /* ListCollectionViewController.xib in Resources */,
 				EE47574C29F93EF700C7F2C0 /* LaunchScreen.storyboard in Resources */,
 				EE47574929F93EF700C7F2C0 /* Assets.xcassets in Resources */,
 				EE47574729F93EF600C7F2C0 /* Main.storyboard in Resources */,
+				EEAF58EA2A0EE1F800CF843F /* ListPostViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +451,7 @@
 				EE47575E29F94EF400C7F2C0 /* UIView+Extensions.swift in Sources */,
 				EE47577929F9627D00C7F2C0 /* UserViewModel.swift in Sources */,
 				EEA00EE62A029F8B0090691D /* DataSource.swift in Sources */,
+				EEAF58E92A0EE1F800CF843F /* ListPostViewController.swift in Sources */,
 				EE47574429F93EF600C7F2C0 /* ViewController.swift in Sources */,
 				EE749EF129FDB536008C56D2 /* UserPostViewModel.swift in Sources */,
 				EE47575729F947DE00C7F2C0 /* LivePreviewViews.swift in Sources */,

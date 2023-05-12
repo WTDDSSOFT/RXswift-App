@@ -9,26 +9,26 @@ import Foundation
 
 public class UserPostViewModel: NSObject {
 
-  private let model: UserPost
+  private let model: UserPost?
 
-   init(model: UserPost) {
+   init(model: UserPost?) {
       self.model = model
    }
 
    public var userId: Int {
-      return model.userId ?? 0
+      return model?.userId ?? 0
    }
 
    public var id: Int {
-      return model.id ?? 0
+      return model?.id ?? 0
    }
 
    public var title: String {
-      return model.title ?? ""
+      return model?.title ?? ""
    }
 
    public var body: String {
-      return model.body ?? ""
+      return model?.body ?? ""
    }
 
 

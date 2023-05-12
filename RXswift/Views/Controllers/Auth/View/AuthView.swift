@@ -19,10 +19,11 @@ final class AuthView: UIView {
 
    public lazy var userEmail: UITextField = {
       let textField = UITextField()
+
       textField.clipsToBounds = true
       textField.layer.backgroundColor = UIColor.darkTextFeild.cgColor
-      textField.placeholder = " Type a name"
-      textField.textAlignment = .justified
+      textField.placeholder = "  Type a name"
+      textField.textAlignment = .left
       textField.font = .boldSystemFont(ofSize: 14)
       textField.textColor = .lightGray
       textField.layer.cornerRadius = 10

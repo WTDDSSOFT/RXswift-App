@@ -104,7 +104,15 @@ extension ApiManager: Api {
             return Disposables.create { }
         }
     }
-    
+
+    func fetchUserPostv2(userId: Int) -> Observable<[UserPost]> {
+        self.provider.rx.request(.showPostByUserId(userId: userId))
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .userInteractive))
+            .filterSuccessfulStatusCodes()
+            .map([UserPost].self)
+            .asObservable()
+    }
+
     func fetchUserPostComment(postID: Int) -> Single<[UserPostComment]> {
         return Single<[UserPostComment]>.create { single in
             self.provider.request(.showPostCommentsByUserPostId(postId: postID)) { (result) in

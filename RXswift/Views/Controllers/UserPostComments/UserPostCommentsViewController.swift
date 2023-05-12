@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 
 class UserPostCommentsViewController: UIViewController {
-
     var postId: Int!
     var refreshControl: UIRefreshControl!
 
@@ -41,26 +40,11 @@ class UserPostCommentsViewController: UIViewController {
         self.refreshControl.attributedTitle = NSAttributedString(string: "Loading...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         self.tableView.refreshControl = refreshControl
         
-        //self.refreshControl.rx.controlEvent(.valueChanged).filter({[weak self] _ in self?.refreshControl.isRefreshing ?? false})
-        let input = UserPostCommentsViewModel.Input(
-            refresh: self.refreshControl.rx.controlEvent(.valueChanged).filter({[weak self] _ in self?.refreshControl.isRefreshing ?? false}).startWith(())
-        )
-        
-        let viewModel = UserPostCommentsViewModel(postId: postId)
-        let output = viewModel.bind(input: input)
-
-        output.postList
-            .drive(self.tableView.rx.items(dataSource: dataSource))
-            .disposed(by: self.disposeBag)
-        
-        output.isLoading
-            .drive(self.refreshControl.rx.isRefreshing).disposed(by: self.disposeBag)
-        
+        setupBidings()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         setupUi()
-
     }
 
     override func viewDidLayoutSubviews() {
@@ -72,7 +56,26 @@ class UserPostCommentsViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-//MARK: - DATASOURCE RXSWIFT
+    private func setupBidings() {
+
+        let input = UserPostCommentsViewModel.Input(
+            refresh: self.refreshControl.rx.controlEvent(.valueChanged).filter({
+                [weak self] _ in self?.refreshControl.isRefreshing ?? false}
+            ).startWith(())
+        )
+
+        let viewModel = UserPostCommentsViewModel(postId: postId)
+        let output = viewModel.bind(input: input)
+
+        output.postList
+            .drive(self.tableView.rx.items(dataSource: dataSource))
+            .disposed(by: self.disposeBag)
+
+        output.isLoading
+            .drive(self.refreshControl.rx.isRefreshing).disposed(by: self.disposeBag)
+    }
+
+    //MARK: - DATASOURCE RXSWIFT
     lazy var dataSource: RxTableViewSectionedReloadDataSource<SectionModel<Void, UserPostComment>> = {
         return .init(configureCell: { dataSource, tableView, indexPath, item -> UITableViewCell in
             let cell = tableView.dequeueReusableCell(withIdentifier: UserPostItemTableViewCell.identifier) as! UserPostItemTableViewCell
@@ -80,7 +83,6 @@ class UserPostCommentsViewController: UIViewController {
             return cell
         })
     }()
-
 }
 
 //MARK: - UI & Constrantins

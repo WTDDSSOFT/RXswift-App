@@ -9,12 +9,14 @@ import UIKit
 import RxCocoa
 import RxSwift
 import RxDataSources
+import SkeletonView
 
-final class ListCollectionViewController: UICollectionViewController {
+class ListCollectionViewController: UIViewController {
 
-    public var findUser: Int? {
+    var findUser: Int? {
         didSet {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.view.stopSkeletonAnimation()
                 guard let findUser = self.findUser else { return  }
                 self.api.fetchUserPost(userId: findUser).subscribe { result in
                     switch result {
@@ -33,168 +35,214 @@ final class ListCollectionViewController: UICollectionViewController {
     private let api = ApiManager()
     private let disposeBag = DisposeBag()
 
-    private func collectionViewSetup () {
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            collectionView.isSkeletonable = true
+            
+            collectionView.backgroundColor = .clear
+            collectionView.showsHorizontalScrollIndicator = false
+            collectionView.showsVerticalScrollIndicator = false
 
-        collectionView!.register(ListCollectionViewCell.self,
-                                 forCellWithReuseIdentifier: ListCollectionViewCell.identifier)
+            collectionView.dataSource = self
+            collectionView.delegate = self
 
-        collectionView!.register(HeaderCollectionViewCell.self,
-                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                 withReuseIdentifier:  HeaderCollectionViewCell.identifier)
+            collectionView.register(ListCollectionViewCell.self,
+                                    forCellWithReuseIdentifier: ListCollectionViewCell.identifier)
+//            collectionView.register(HeaderCollectionViewCell.self,
+//                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+//                                    withReuseIdentifier:  HeaderCollectionViewCell.identifier)
+//
+//            collectionView.register(FooterCollectionViewCell.self,
+//                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+//                                    withReuseIdentifier: FooterCollectionViewCell.identifier)
+        }
+    }
 
-        collectionView!.register(FooterCollectionViewCell.self,
-                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                 withReuseIdentifier: FooterCollectionViewCell.identifier)
-
-        collectionView.backgroundColor = .darkBackground
-        collectionView.dataSource = self
-        collectionView.delegate = self
+    convenience init(findUser: Int?) {
+        self.init()
+        self.findUser = findUser
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionViewSetup()
+        collectionView.prepareSkeleton { done in
+            self.view.showAnimatedSkeleton()
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.showSkeleton(usingColor: .clouds, transition: .crossDissolve(0.26))
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
 }
 
 //MARK: - UICollectionViewDataSource
 
-extension ListCollectionViewController {
+extension ListCollectionViewController: UICollectionViewDataSource {
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
+    //    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    //        // #warning Incomplete implementation, return the number of sections
+    //        return 1
+    //    }
+    //
+    //    func collectionView(_ collectionView: UICollectionView,
+    //                        numberOfItemsInSection section: Int
+    //    ) -> Int {
+    //        // #warning Incomplete implementation, return the number of items
+    //        return userPostVM?.count ?? 0
+    //    }
+    //
+    //    func collectionView(_ collectionView: UICollectionView,
+    //                        cellForItemAt indexPath: IndexPath
+    //    ) -> UICollectionViewCell {
+    //
+    //        let cell = collectionView.dequeueReusableCell(
+    //            withReuseIdentifier: ListCollectionViewCell.identifier,
+    //            for: indexPath
+    //        ) as! ListCollectionViewCell
+    //
+    //        guard let userVM = userPostVM?[indexPath.row] else { return UICollectionViewCell() }
+    //        cell.configCell(userM: UserPostViewModel(model: userVM))
+    //
+    //
+    //        return cell
+    //    }
 
-    override func collectionView(_ collectionView: UICollectionView,
-                                 numberOfItemsInSection section: Int
-    ) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return userPostVM?.count ?? 0
-    }
-
-    override func collectionView(_ collectionView: UICollectionView,
-                                 cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ListCollectionViewCell.identifier,
-            for: indexPath
-        ) as! ListCollectionViewCell
-
-        guard let userM = userPostVM?[indexPath.row] else { return UICollectionViewCell() }
-
-        cell.configCell(userM: UserPostViewModel(model: userM))
-
-        return cell
-    }
-
-    override func collectionView(_ collectionView: UICollectionView,
-                                 didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
 
         collectionView.cellForItem(at: indexPath)
         guard let postId = userPostVM?[indexPath.row] else { return }
         
         let vc = UserPostCommentsViewController(postId: postId.id)
-        
-        
-//
         self.navigationController?.pushViewController(vc, animated: true)
-//
-//
-//        api.fetchUserPostComment(postID: postId.id ?? 0).subscribe{ result in
-//            switch result {
-//            case .success(let userPostComments):
-//                let vc = UserPostCommentsViewController(userPostCommentVM: userPostComments)
-//
-//
-//
-//                print("success to get data \(userPostComments)")
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//                    self.navigationController?.pushViewController(vc, animated: true)
-//                }
-//            case .failure(let error):
-//                print("Failure to decode  userPostComments data \(error.localizedDescription)")
-//            }
-//        }.disposed(by: self.disposeBag)
     }
 
 }
 
-//MARK: - UICollectionViewDelegateFlowLayout
+////MARK: - UICollectionViewDelegateFlowLayout
 
 extension ListCollectionViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
+    //    func collectionView(_ collectionView: UICollectionView,
+    //                        layout collectionViewLayout: UICollectionViewLayout,
+    //                        sizeForItemAt indexPath: IndexPath
+    //    ) -> CGSize {
+    //
+    //        return CGSize(width: collectionView.bounds.size.width - 46, height: 150)
+    //    }
+    //
+    //    func collectionView(_ collectionView: UICollectionView,
+    //                        layout collectionViewLayout: UICollectionViewLayout,
+    //                        minimumLineSpacingForSectionAt section: Int
+    //    ) -> CGFloat {
+    //
+    //        return 20
+    //    }
 
-        return CGSize(width: collectionView.bounds.size.width - 46, height: 150)
+    //    func collectionView(_ collectionView: UICollectionView,
+    //                        layout collectionViewLayout: UICollectionViewLayout,
+    //                        insetForSectionAt section: Int
+    //    ) -> UIEdgeInsets {
+    //
+    //        return UIEdgeInsets.init(top: 40, left: 0, bottom: 40, right: 0)
+    //    }
+
+    //    func collectionView(_ collectionView: UICollectionView,
+    //                        viewForSupplementaryElementOfKind kind: String,
+    //                        at indexPath: IndexPath
+    //    ) -> UICollectionReusableView {
+    //
+    //        switch kind {
+    //
+    //            case UICollectionView.elementKindSectionHeader:
+    //                let headerCell = collectionView.dequeueReusableSupplementaryView(
+    //                    ofKind: kind,
+    //                    withReuseIdentifier: HeaderCollectionViewCell.identifier,
+    //                    for: indexPath) as! HeaderCollectionViewCell
+    //
+    //                return headerCell
+    //
+    //            case UICollectionView.elementKindSectionFooter:
+    //                let footerCell = collectionView.dequeueReusableSupplementaryView(
+    //                    ofKind: kind,
+    //                    withReuseIdentifier: FooterCollectionViewCell.identifier,
+    //                    for: indexPath) as! FooterCollectionViewCell
+    //
+    //                return footerCell
+    //
+    //            default:
+    //                fatalError("Failed to load header ou footer collectionCell")
+    //        }
+    //    }
+
+    //    func collectionView(_ collectionView: UICollectionView,
+    //                        layout collectionViewLayout: UICollectionViewLayout,
+    //                        referenceSizeForHeaderInSection section: Int
+    //    ) -> CGSize {
+    //
+    //        return CGSize(width: 0, height: 90.0)
+    //    }
+    //
+    //    func collectionView(_ collectionView: UICollectionView,
+    //                        layout collectionViewLayout: UICollectionViewLayout,
+    //                        referenceSizeForFooterInSection section: Int
+    //    ) -> CGSize {
+    //
+    //        return CGSize(width: 0, height: 80.0)
+    //    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width/3 - 10, height: view.frame.width/3 - 10)
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int
-    ) -> CGFloat {
-
-        return 20
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int
-    ) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
+}
 
-        return UIEdgeInsets.init(top: 40, left: 0, bottom: 40, right: 0)
+// MARK: - SkeletonCollectionViewDataSource
+
+extension ListCollectionViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return ListCollectionViewCell.identifier
     }
 
-    override func collectionView(_ collectionView: UICollectionView,
-                                 viewForSupplementaryElementOfKind kind: String,
-                                 at indexPath: IndexPath
-    ) -> UICollectionReusableView {
-
-        switch kind {
-
-            case UICollectionView.elementKindSectionHeader:
-                let headerCell = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: HeaderCollectionViewCell.identifier,
-                    for: indexPath) as! HeaderCollectionViewCell
-
-                return headerCell
-
-            case UICollectionView.elementKindSectionFooter:
-                let footerCell = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: FooterCollectionViewCell.identifier,
-                    for: indexPath) as! FooterCollectionViewCell
-
-                return footerCell
-
-            default:
-                fatalError("Failed to load header ou footer collectionCell")
-        }
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-
-        return CGSize(width: 0, height: 90.0)
+    func collectionSkeletonView(_ skeletonView: UICollectionView, skeletonCellForItemAt indexPath: IndexPath) -> UICollectionViewCell? {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.identifier, for: indexPath) as? ListCollectionViewCell
+        cell?.isSkeletonable = indexPath.row != 0
+        return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForFooterInSection section: Int
-    ) -> CGSize {
+    // MARK: - UICollectionViewDataSource
 
-        return CGSize(width: 0, height: 80.0)
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return userPostVM?.count ?? 0
     }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.identifier, for: indexPath) as! ListCollectionViewCell
+        guard let userVM = userPostVM?[indexPath.row] else { return UICollectionViewCell() }
+        cell.configCell(userM: UserPostViewModel(model: userVM))
+
+        return cell
+    }
+
+    func collectionSkeletonView(_ skeletonView: UICollectionView, prepareCellForSkeleton cell: UICollectionViewCell, at indexPath: IndexPath) {
+        let cell = cell as? ListCollectionViewCell
+        cell?.isSkeletonable = indexPath.row != 0
+    }
+
 }
