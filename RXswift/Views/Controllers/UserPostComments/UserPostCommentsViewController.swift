@@ -13,29 +13,25 @@ import RxCocoa
 class UserPostCommentsViewController: UIViewController {
 
     var postId: Int!
-    private let disposeBag = DisposeBag()
     var refreshControl: UIRefreshControl!
-    
-    convenience init(postId: Int!) {
-        self.init()
-        self.postId = postId
-    }
-    
+
+    private let disposeBag = DisposeBag()
+
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.rowHeight = 70
         tableView.backgroundColor = .darkBackground
         tableView .translatesAutoresizingMaskIntoConstraints = false
         tableView.register(UserPostItemTableViewCell.self,
                            forCellReuseIdentifier: UserPostItemTableViewCell.identifier)
         tableView.tableFooterView = UIView()
-        
-        
-        
-        
-        
         return tableView
     }()
+
+    convenience init(postId: Int!) {
+        self.init()
+        self.postId = postId
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,14 +83,9 @@ class UserPostCommentsViewController: UIViewController {
 
 }
 
+//MARK: - UI & Constrantins
+
 extension UserPostCommentsViewController {
-
-//    func setupTableView() {
-//        let input = UserPostCommentsItemViewModel.Input(allPostComments: )
-//        let viewModel = UserPostCommentsItemViewModel(postComments: self.userPostCommentVM)
-//        let outPut = viewModel.bind(input: input )
-//    }
-
 
     private func setupUi() {
         self.tableView.rx.setDelegate(self).disposed(by: self.disposeBag)
@@ -115,9 +106,10 @@ extension UserPostCommentsViewController {
 
 }
 
-extension UserPostCommentsViewController: UITableViewDelegate{
+extension UserPostCommentsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
+
 }

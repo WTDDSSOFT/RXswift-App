@@ -30,7 +30,6 @@
 		EE47577C29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47577B29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift */; };
 		EE47577E29F9A2D600C7F2C0 /* ListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47577D29F9A2D600C7F2C0 /* ListCollectionViewController.swift */; };
 		EE595AED2A0167A3002B1AB2 /* UserPostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE595AEC2A0167A3002B1AB2 /* UserPostComment.swift */; };
-		EE595AF02A016B18002B1AB2 /* UserPostCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE595AEF2A016B18002B1AB2 /* UserPostCommentsView.swift */; };
 		EE749EED29FD9B68008C56D2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE749EEC29FD9B68008C56D2 /* User.swift */; };
 		EE749EEF29FDB3FB008C56D2 /* UserPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE749EEE29FDB3FB008C56D2 /* UserPost.swift */; };
 		EE749EF129FDB536008C56D2 /* UserPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE749EF029FDB536008C56D2 /* UserPostViewModel.swift */; };
@@ -70,7 +69,6 @@
 		EE47577B29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JsonCoreData+Extension.swift"; sourceTree = "<group>"; };
 		EE47577D29F9A2D600C7F2C0 /* ListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewController.swift; sourceTree = "<group>"; };
 		EE595AEC2A0167A3002B1AB2 /* UserPostComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostComment.swift; sourceTree = "<group>"; };
-		EE595AEF2A016B18002B1AB2 /* UserPostCommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostCommentsView.swift; sourceTree = "<group>"; };
 		EE749EEC29FD9B68008C56D2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EE749EEE29FDB3FB008C56D2 /* UserPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPost.swift; sourceTree = "<group>"; };
 		EE749EF029FDB536008C56D2 /* UserPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostViewModel.swift; sourceTree = "<group>"; };
@@ -134,11 +132,11 @@
 		EE47573E29F93EF600C7F2C0 /* RXswift */ = {
 			isa = PBXGroup;
 			children = (
+				EEEFAADE2A0E3A3B00E65AC5 /* Utilits */,
 				EE749EEB29FD9B59008C56D2 /* Model */,
-				EE47577329F9613000C7F2C0 /* Managers */,
 				EE47577229F9610400C7F2C0 /* ViewModel */,
-				EE47576329F95E1000C7F2C0 /* Controllers */,
-				EE47575829F9485D00C7F2C0 /* Core */,
+				EE47576329F95E1000C7F2C0 /* Views */,
+				EE47575829F9485D00C7F2C0 /* App */,
 				EE47574D29F93EF700C7F2C0 /* Info.plist */,
 				EE47576F29F9609100C7F2C0 /* UserViewModel.xcdatamodeld */,
 			);
@@ -171,12 +169,10 @@
 			path = LivePreviewViews;
 			sourceTree = "<group>";
 		};
-		EE47575829F9485D00C7F2C0 /* Core */ = {
+		EE47575829F9485D00C7F2C0 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				EE47576129F95DDF00C7F2C0 /* Extensions */,
-				EE47576529F95E4C00C7F2C0 /* Resources */,
-				EE47575529F947BC00C7F2C0 /* LivePreviewViews */,
+				EE47577329F9613000C7F2C0 /* Networking */,
 				EE47573F29F93EF600C7F2C0 /* AppDelegate.swift */,
 				EE47574129F93EF600C7F2C0 /* SceneDelegate.swift */,
 				EE47574329F93EF600C7F2C0 /* ViewController.swift */,
@@ -184,7 +180,7 @@
 				EE47574A29F93EF700C7F2C0 /* LaunchScreen.storyboard */,
 				EE0AF6122A070720001CE046 /* ViewModel.swift */,
 			);
-			path = Core;
+			path = App;
 			sourceTree = "<group>";
 		};
 		EE47576129F95DDF00C7F2C0 /* Extensions */ = {
@@ -198,14 +194,12 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		EE47576329F95E1000C7F2C0 /* Controllers */ = {
+		EE47576329F95E1000C7F2C0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EE47575329F93F7700C7F2C0 /* ListPost */,
-				EE47575429F9411200C7F2C0 /* Auth */,
-				EE595AEE2A016AE7002B1AB2 /* UserPostComments */,
+				EEEFAADD2A0E3A1300E65AC5 /* Controllers */,
 			);
-			path = Controllers;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		EE47576429F95E3800C7F2C0 /* View */ = {
@@ -234,7 +228,7 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		EE47577329F9613000C7F2C0 /* Managers */ = {
+		EE47577329F9613000C7F2C0 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				EE47577429F9613F00C7F2C0 /* CoreDataManager.swift */,
@@ -242,7 +236,7 @@
 				EEA221332A0448E90086DB68 /* MoyaApi.swift */,
 				EECBE1492A09AE6400D22E53 /* ApiManagerParses.swift */,
 			);
-			path = Managers;
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		EE47577A29F98E0500C7F2C0 /* JsonToCoreData+Extension */ = {
@@ -253,18 +247,9 @@
 			path = "JsonToCoreData+Extension";
 			sourceTree = "<group>";
 		};
-		EE57A3042A016FFB00034B1B /* View */ = {
-			isa = PBXGroup;
-			children = (
-				EE595AEF2A016B18002B1AB2 /* UserPostCommentsView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		EE595AEE2A016AE7002B1AB2 /* UserPostComments */ = {
 			isa = PBXGroup;
 			children = (
-				EE57A3042A016FFB00034B1B /* View */,
 				EEA00EE92A02A16F0090691D /* Cell */,
 				EEA00EE42A029F7A0090691D /* DataSource */,
 				EE0184752A0020DF00C5CFB2 /* UserPostCommentsViewController.swift */,
@@ -314,6 +299,26 @@
 				EE0184732A00153A00C5CFB2 /* FooterCollectionViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		EEEFAADD2A0E3A1300E65AC5 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EE47575329F93F7700C7F2C0 /* ListPost */,
+				EE47575429F9411200C7F2C0 /* Auth */,
+				EE595AEE2A016AE7002B1AB2 /* UserPostComments */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		EEEFAADE2A0E3A3B00E65AC5 /* Utilits */ = {
+			isa = PBXGroup;
+			children = (
+				EE47576529F95E4C00C7F2C0 /* Resources */,
+				EE47575529F947BC00C7F2C0 /* LivePreviewViews */,
+				EE47576129F95DDF00C7F2C0 /* Extensions */,
+			);
+			path = Utilits;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -457,7 +462,6 @@
 				EE47577129F9609100C7F2C0 /* UserViewModel.xcdatamodeld in Sources */,
 				EE47576029F950A700C7F2C0 /* UIColor+Extension.swift in Sources */,
 				EEA00EE12A0291850090691D /* TableView+Extension.swift in Sources */,
-				EE595AF02A016B18002B1AB2 /* UserPostCommentsView.swift in Sources */,
 				EE47577C29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift in Sources */,
 				EECBE14A2A09AE6400D22E53 /* ApiManagerParses.swift in Sources */,
 				EE0184742A00153A00C5CFB2 /* FooterCollectionViewCell.swift in Sources */,

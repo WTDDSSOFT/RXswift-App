@@ -9,7 +9,8 @@ import RxSwift
 import RxCocoa
 
 
-class UserPostCommentsViewModel: ViewModel{
+class UserPostCommentsViewModel: ViewModel {
+
     var postId: Int!
     
     struct Input {
@@ -39,8 +40,7 @@ class UserPostCommentsViewModel: ViewModel{
                 return [ SectionModel(model: (), items: posts) ]
             }
         
-        
-        
+    
         return Output(postList: postsList.asDriver(onErrorJustReturn: []), isLoading: isLoadingRelay.asDriver(onErrorJustReturn: false))
     }
     
