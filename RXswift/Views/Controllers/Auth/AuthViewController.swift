@@ -62,13 +62,12 @@ class AuthViewController: UIViewController {
         .disposed(by: self.disposeBag)
     }
 
-
     private func getUser() {
         guard let userName = authView.userEmail.text,
               !userName.isEmpty else {
             return
         }
-        self.apiManager.fetchUserv1_5().subscribe (onNext: { userResponse in
+        self.apiManager.fetchUserv().subscribe (onNext: { userResponse in
             self.checkUser(userResponse, userName)
         }, onError: { error in
             print(error)
@@ -85,10 +84,11 @@ extension AuthViewController {
     }
 
     private func checkUser(_ useResponse: [UserModel], _ userName: String)  {
+
         let findUser = useResponse.filter{ $0.username == userName }
 
         if !findUser.isEmpty {
-            let vc = ListPostViewController(findUser: findUser.first?.id)
+            let vc = ListPostViewController(findUser: findUser.first?.id ?? 0)
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
             self.showAlert()

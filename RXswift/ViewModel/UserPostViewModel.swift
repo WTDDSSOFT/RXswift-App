@@ -5,31 +5,42 @@
 //  Created by william torres dias dos santos on 29/04/23.
 //
 
-import Foundation
+import RxSwift
+import RxCocoa
 
-public class UserPostViewModel: NSObject {
+public class UserPostViewModel: ViewModel {
 
-  private let model: UserPost?
+    var userId: Int!
 
-   init(model: UserPost?) {
-      self.model = model
-   }
+    struct Input {
+        let refresh:Observable<Void>
+    }
 
-   public var userId: Int {
-      return model?.userId ?? 0
-   }
+    struct Output {
+        let userPostList: Driver<[SectionModel<Void, UserPost>]>
+        let isLoading: Driver<Bool>
+    }
 
-   public var id: Int {
-      return model?.id ?? 0
-   }
+    convenience init(userId: Int) {
+        self.init()
+        self.userId = userId
+    }
 
-   public var title: String {
-      return model?.title ?? ""
-   }
+    func bind(input: Input) -> Output {
+        let isLoadingRelay = BehaviorRelay(value: false)
 
-   public var body: String {
-      return model?.body ?? ""
-   }
+        let userPostList = input.refresh
+            .do(onNext: { _ in isLoadingRelay.accept(true) })
+            .flatMapLatest({ _ in
+                ApiManager.shared.fetchUserPost(userId: self.userId)
+            })
+            .do(onNext: { _ in isLoadingRelay.accept(false)}, onError: {_ in isLoadingRelay.accept(false)})
+            .map { userPost in
+            return [SectionModel(model: (), items: userPost)]
+        }
 
+        return Output(userPostList: userPostList.asDriver(onErrorJustReturn: []),
+                      isLoading: isLoadingRelay.asDriver(onErrorJustReturn: false))
+    }
 
 }

@@ -27,7 +27,7 @@ class UserPostCommentsViewController: UIViewController {
         return tableView
     }()
 
-    convenience init(postId: Int!) {
+    convenience init(postId: Int) {
         self.init()
         self.postId = postId
     }
@@ -44,6 +44,7 @@ class UserPostCommentsViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupUi()
     }
 

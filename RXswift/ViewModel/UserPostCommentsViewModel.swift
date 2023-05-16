@@ -33,7 +33,7 @@ class UserPostCommentsViewModel: ViewModel {
         let postsList = input.refresh
             .do(onNext: { _ in isLoadingRelay.accept( true )})
             .flatMapLatest({ _ in
-                ApiManager.shared.fetchUserPostCommentv2(postID: self.postId)
+                ApiManager.shared.fetchUserPostComment(postID: self.postId)
             })
             .do(onNext: { _ in isLoadingRelay.accept( false )}, onError: {_ in isLoadingRelay.accept( false )})
             .map { posts in

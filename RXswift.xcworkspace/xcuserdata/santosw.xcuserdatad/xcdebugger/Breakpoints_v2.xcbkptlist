@@ -7,17 +7,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "79EAAEB9-EB55-4204-984C-F5850522198D"
+            uuid = "0BB503AE-4EA9-409B-A839-BEFF23127981"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RXswift/Views/Controllers/ListPost/Cell/ListCollectionViewCell.swift"
+            filePath = "RXswift/ViewModel/UserPostViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "configCell(userM:)"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "bind(input:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0BB503AE-4EA9-409B-A839-BEFF23127981 - e7d7651f07f18e3b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RXswift.UserPostViewModel.bind(input: RXswift.UserPostViewModel.Input) -&gt; RXswift.UserPostViewModel.Output"
+                  moduleName = "RXswift"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/santosw/Developer/Swift/RXswift/RXswift/ViewModel/UserPostViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  uuid = "0BB503AE-4EA9-409B-A839-BEFF23127981 - e7d7651f07f18e1a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RXswift.UserPostViewModel.bind(input: RXswift.UserPostViewModel.Input) -&gt; RXswift.UserPostViewModel.Output"
+                  moduleName = "RXswift"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/santosw/Developer/Swift/RXswift/RXswift/ViewModel/UserPostViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "132">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

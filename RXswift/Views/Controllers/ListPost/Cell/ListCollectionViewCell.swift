@@ -15,7 +15,7 @@ class ListCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.font = .boldSystemFont(ofSize: 14)
         label.clipsToBounds = true
-        label.textColor = .darkTextFeild
+        label.textColor = .white
         label.isSkeletonable = true
         label.translatesAutoresizingMaskIntoConstraints = false
         label.heightAnchor.constraint(equalToConstant: 20).isActive = true
@@ -27,7 +27,7 @@ class ListCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 14)
         label.clipsToBounds = true
-        label.textColor = .darkTextFeild
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
         label.isSkeletonable = true
@@ -39,8 +39,6 @@ class ListCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        isSkeletonable = true
         setupCell()
     }
 
@@ -51,7 +49,6 @@ class ListCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
 
         NSLayoutConstraint.activate([
-
             titleLb.topAnchor.constraint(equalTo: topAnchor),
             titleLb.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             titleLb.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
@@ -64,20 +61,19 @@ class ListCollectionViewCell: UICollectionViewCell {
         ])
     }
 
-    func configCell(userM: UserPostViewModel) {
-        self.titleLb.stopSkeletonAnimation()
-        self.bodyLb.stopSkeletonAnimation()
-        print("userVM \(userM.title)")
+    func configCell(userM: UserPost) {
+
         self.titleLb.text = userM.title
         self.bodyLb.text = userM.body
     }
 
-    private func setupCell() {
-        addSubview(titleLb)
-        addSubview(bodyLb)
 
-        contentView.layer.cornerRadius = 5.0
-        contentView.layer.masksToBounds = true
+    private func setupCell() {
+        self.contentView.addSubview(titleLb)
+        self.contentView.addSubview(bodyLb)
+
+        self.contentView.layer.cornerRadius = 5.0
+        self.contentView.layer.masksToBounds = true
 
         layer.cornerRadius = 5.0
         layer.masksToBounds = false
@@ -100,9 +96,6 @@ class ListCollectionViewCell: UICollectionViewCell {
             cornerRadius: 5.0
         ).cgPath
 
-        self.titleLb.showAnimatedSkeleton(usingColor: UIColor.greenSea)
-        self.bodyLb.showAnimatedSkeleton(usingColor: UIColor.greenSea)
-        
-        self.backgroundColor = .white
+        self.backgroundColor = .darkTextFeild
     }
 }

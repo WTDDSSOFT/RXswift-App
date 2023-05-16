@@ -1,23 +1,19 @@
 //
-//  MoyaApi.swift
+//  UserApi.swift
 //  RXswift
 //
-//  Created by william torres dias dos santos on 04/05/23.
+//  Created by william torres dias dos santos on 15/05/23.
 //
 
-import Foundation
 import Moya
 
-// User Moya
-enum  MyService {
+enum UserApi {
     case users
     case showPostByUserId(userId: Int)
     case showPostCommentsByUserPostId(postId: Int)
 }
 
-extension MyService: TargetType {
-
-    var baseURL: URL { URL(string: "https://jsonplaceholder.typicode.com")! }
+extension UserApi: TargetType {
 
     var path: String {
         switch self {
@@ -30,7 +26,7 @@ extension MyService: TargetType {
         }
     }
 
-    var method: Moya.Method {
+    var method: Method {
         switch self {
         case .users, .showPostByUserId, .showPostCommentsByUserPostId:
         return  .get
@@ -44,10 +40,6 @@ extension MyService: TargetType {
              .showPostCommentsByUserPostId:
             return .requestPlain
         }
-    }
-
-    var headers: [String : String]? {
-        return ["Content-type": "application/json"]
     }
 
 }
