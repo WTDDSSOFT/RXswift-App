@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SkeletonView
 
 class ListCollectionViewCell: UICollectionViewCell {
 
@@ -16,7 +15,6 @@ class ListCollectionViewCell: UICollectionViewCell {
         label.font = .boldSystemFont(ofSize: 14)
         label.clipsToBounds = true
         label.textColor = .white
-        label.isSkeletonable = true
         label.translatesAutoresizingMaskIntoConstraints = false
         label.heightAnchor.constraint(equalToConstant: 20).isActive = true
         return label
@@ -30,7 +28,6 @@ class ListCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
-        label.isSkeletonable = true
         label.textAlignment = .justified
         return label
     }()

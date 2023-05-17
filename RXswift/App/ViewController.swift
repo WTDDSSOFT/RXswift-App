@@ -6,24 +6,22 @@
 //
 
 import UIKit
+import Lottie
 
 class ViewController: UIViewController {
 
-   override func viewDidLoad() {
+    @IBOutlet weak var animationView: LottieAnimationView!
+
+    override func viewDidLoad() {
       super.viewDidLoad()
       // Do any additional setup after loading the view.
+        animationView.contentMode = .scaleAspectFit
+
+        animationView.loopMode = .loop
+
+        animationView.animationSpeed = 0.5
+        animationView.play()
    }
 
 }
 
-
-#if DEBUG
-
-import SwiftUI
-
-struct ViewController_Preview: PreviewProvider {
-    static var previews: some View = Preview(for: ViewController())
-        .preferredColorScheme(.light)
-}
-
-#endif

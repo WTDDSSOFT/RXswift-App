@@ -9,13 +9,13 @@ import UIKit
 
 final class AuthView: UIView {
    
-    private lazy var imageView: UIImageView = {
-      let imageView = UIImageView(image: UIImage(named: "Login"))
-      imageView.clipsToBounds = true
-      imageView.contentMode = .scaleToFill
-      imageView.translatesAutoresizingMaskIntoConstraints = false
-      return imageView
-   }()
+ private lazy var imageView: UIImageView = {
+    let imageView = UIImageView(image: UIImage(named: "Login"))
+    imageView.clipsToBounds = true
+    imageView.contentMode = .scaleToFill
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    return imageView
+}()
 
    public lazy var userEmail: UITextField = {
       let textField = UITextField()

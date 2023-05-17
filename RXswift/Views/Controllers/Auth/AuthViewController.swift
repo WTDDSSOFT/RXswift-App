@@ -26,11 +26,11 @@ class AuthViewController: UIViewController {
         super.viewWillAppear(animated)
         view.backgroundColor = .darkBackground
         view.addSubview(authView)
+        navigationController?.navigationBar.isHidden = false
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
 
     override func viewDidLayoutSubviews() {
@@ -109,13 +109,13 @@ extension AuthViewController {
     }
 }
 
-#if DEBUG
-
-import SwiftUI
-
-struct AuthViewController_Preview: PreviewProvider {
-    static var previews: some View = Preview(for: AuthViewController())
-        .preferredColorScheme(.light)
-}
-
-#endif
+//#if DEBUG
+//
+//import SwiftUI
+//
+//struct AuthViewController_Preview: PreviewProvider {
+//    static var previews: some View = Preview(for: AuthViewController())
+//        .preferredColorScheme(.light)
+//}
+//
+//#endif

@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 class UserPostCommentsViewController: UIViewController {
-    var postId: Int!
+    var postId: Int?
     var refreshControl: UIRefreshControl!
 
     private let disposeBag = DisposeBag()
@@ -27,7 +27,7 @@ class UserPostCommentsViewController: UIViewController {
         return tableView
     }()
 
-    convenience init(postId: Int) {
+    convenience init(postId: Int?) {
         self.init()
         self.postId = postId
     }
@@ -65,7 +65,7 @@ class UserPostCommentsViewController: UIViewController {
             ).startWith(())
         )
 
-        let viewModel = UserPostCommentsViewModel(postId: postId)
+        let viewModel = UserPostCommentsViewModel(postId: postId ?? 0)
         let output = viewModel.bind(input: input)
 
         output.postList
@@ -84,6 +84,8 @@ class UserPostCommentsViewController: UIViewController {
             return cell
         })
     }()
+
+    
 }
 
 //MARK: - UI & Constrantins

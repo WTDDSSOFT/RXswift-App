@@ -29,6 +29,10 @@
 		EE47577929F9627D00C7F2C0 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47577829F9627D00C7F2C0 /* UserViewModel.swift */; };
 		EE47577C29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47577B29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift */; };
 		EE595AED2A0167A3002B1AB2 /* UserPostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE595AEC2A0167A3002B1AB2 /* UserPostComment.swift */; };
+		EE732ED42A14F4CC0005E949 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE732ED22A14F4CC0005E949 /* SplashViewController.swift */; };
+		EE732ED52A14F4CC0005E949 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE732ED32A14F4CC0005E949 /* SplashViewController.xib */; };
+		EE732EDB2A1517050005E949 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE732EDA2A1517050005E949 /* CollectionView.swift */; };
+		EE732EDD2A151A170005E949 /* splash.json in Resources */ = {isa = PBXBuildFile; fileRef = EE732EDC2A151A170005E949 /* splash.json */; };
 		EE749EED29FD9B68008C56D2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE749EEC29FD9B68008C56D2 /* User.swift */; };
 		EE749EEF29FDB3FB008C56D2 /* UserPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE749EEE29FDB3FB008C56D2 /* UserPost.swift */; };
 		EE749EF129FDB536008C56D2 /* UserPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE749EF029FDB536008C56D2 /* UserPostViewModel.swift */; };
@@ -69,6 +73,10 @@
 		EE47577829F9627D00C7F2C0 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		EE47577B29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JsonCoreData+Extension.swift"; sourceTree = "<group>"; };
 		EE595AEC2A0167A3002B1AB2 /* UserPostComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostComment.swift; sourceTree = "<group>"; };
+		EE732ED22A14F4CC0005E949 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		EE732ED32A14F4CC0005E949 /* SplashViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashViewController.xib; sourceTree = "<group>"; };
+		EE732EDA2A1517050005E949 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		EE732EDC2A151A170005E949 /* splash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash.json; sourceTree = "<group>"; };
 		EE749EEC29FD9B68008C56D2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EE749EEE29FDB3FB008C56D2 /* UserPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPost.swift; sourceTree = "<group>"; };
 		EE749EF029FDB536008C56D2 /* UserPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostViewModel.swift; sourceTree = "<group>"; };
@@ -148,6 +156,7 @@
 		EE47575329F93F7700C7F2C0 /* ListPost */ = {
 			isa = PBXGroup;
 			children = (
+				EE732ED92A1516EE0005E949 /* View */,
 				EEDB46FA29FB30D800993258 /* Cell */,
 				EEAF58E72A0EE1F800CF843F /* ListPostViewController.swift */,
 			);
@@ -215,6 +224,7 @@
 		EE47576529F95E4C00C7F2C0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EE732ED82A14F7270005E949 /* Lottie */,
 				EE47574829F93EF700C7F2C0 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -256,6 +266,31 @@
 				EE0184752A0020DF00C5CFB2 /* UserPostCommentsViewController.swift */,
 			);
 			path = UserPostComments;
+			sourceTree = "<group>";
+		};
+		EE732ED12A14F42A0005E949 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				EE732ED22A14F4CC0005E949 /* SplashViewController.swift */,
+				EE732ED32A14F4CC0005E949 /* SplashViewController.xib */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		EE732ED82A14F7270005E949 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				EE732EDC2A151A170005E949 /* splash.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
+		EE732ED92A1516EE0005E949 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EE732EDA2A1517050005E949 /* CollectionView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		EE749EEB29FD9B59008C56D2 /* Model */ = {
@@ -314,6 +349,7 @@
 		EEEFAADD2A0E3A1300E65AC5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EE732ED12A14F42A0005E949 /* Splash */,
 				EE47575329F93F7700C7F2C0 /* ListPost */,
 				EE47575429F9411200C7F2C0 /* Auth */,
 				EE595AEE2A016AE7002B1AB2 /* UserPostComments */,
@@ -395,6 +431,8 @@
 				EE47574C29F93EF700C7F2C0 /* LaunchScreen.storyboard in Resources */,
 				EE47574929F93EF700C7F2C0 /* Assets.xcassets in Resources */,
 				EE47574729F93EF600C7F2C0 /* Main.storyboard in Resources */,
+				EE732ED52A14F4CC0005E949 /* SplashViewController.xib in Resources */,
+				EE732EDD2A151A170005E949 /* splash.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,10 +507,12 @@
 				EECCD7C02A12E53800F7F7EE /* UserApi.swift in Sources */,
 				EE595AED2A0167A3002B1AB2 /* UserPostComment.swift in Sources */,
 				EE47574229F93EF600C7F2C0 /* SceneDelegate.swift in Sources */,
+				EE732EDB2A1517050005E949 /* CollectionView.swift in Sources */,
 				EE0AF6132A070720001CE046 /* ViewModel.swift in Sources */,
 				EE0184722A0014F100C5CFB2 /* HeaderCollectionViewCell.swift in Sources */,
 				EE47577129F9609100C7F2C0 /* UserViewModel.xcdatamodeld in Sources */,
 				EE47576029F950A700C7F2C0 /* UIColor+Extension.swift in Sources */,
+				EE732ED42A14F4CC0005E949 /* SplashViewController.swift in Sources */,
 				EEA00EE12A0291850090691D /* TableView+Extension.swift in Sources */,
 				EE47577C29F98E3A00C7F2C0 /* JsonCoreData+Extension.swift in Sources */,
 				EECBE14A2A09AE6400D22E53 /* ApiManagerParses.swift in Sources */,

@@ -17,24 +17,14 @@ import RxCocoa
 import RxSwift
 import RxDataSources
 
-class ListPostViewController: UIViewController {
+final class ListPostViewController: UIViewController {
 
-    private var userPostVM: [UserPost]?
+    private let collection = CollectionView()
     private let api = ApiManager()
     private let disposeBag = DisposeBag()
 
     var findUser: Int!
     var refreshControl: UIRefreshControl!
-
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-        collectionView.backgroundColor = .clear
-        collectionView.delegate = self
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(ListCollectionViewCell.self,
-                                forCellWithReuseIdentifier: ListCollectionViewCell.identifier)
-        return collectionView
-    }()
 
     convenience init(findUser: Int) {
         self.init()
@@ -47,8 +37,9 @@ class ListPostViewController: UIViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl.tintColor = .white
         self.refreshControl.attributedTitle = NSAttributedString(string: "Loading...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-        self.collectionView.refreshControl = refreshControl
+        collection.collectionView.refreshControl = refreshControl
 
+        setuptBehaviours()
         setupBindings()
     }
 
@@ -78,7 +69,7 @@ class ListPostViewController: UIViewController {
         let output = viewModel.bind(input: input)
 
         output.userPostList
-            .drive(self.collectionView.rx.items(dataSource: dataSource))
+            .drive(self.collection.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
 
         output.isLoading
@@ -96,69 +87,36 @@ class ListPostViewController: UIViewController {
             return cell
         })
     }()
+
+
+    private func setuptBehaviours() {
+        self.collection.collectionView.rx
+            .modelSelected(UserPost.self).subscribe { item in
+            let vc = UserPostCommentsViewController(postId: item.element?.id ?? 0)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }.disposed(by: self.disposeBag)
+    }
+
 }
 
-//MARK: - UICollectionViewDelegate
-extension ListPostViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView,
-                        didSelectItemAt indexPath: IndexPath) {
 
-        collectionView.cellForItem(at: indexPath)
-        guard let postId = userPostVM?[indexPath.row] else { return }
-
-        let vc = UserPostCommentsViewController(postId: postId.id ?? 0)
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-}
-
-//MARK: - UICollectionViewDelegateFlowLayout
-extension ListPostViewController:  UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
-
-        guard let count = userPostVM?.count else {
-            return 0
-        }
-        return count
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: collectionView.bounds.size.width - 46, height: 150)
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-
-        return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-
-        return 20
-    }
-}
 
 //MARK: - UI
 extension ListPostViewController {
 
     private func setupUI() {
         self.view.backgroundColor = .darkBackground
-        self.view.addSubview(collectionView)
+        self.collection.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(collection)
+        self.title = "Post"
     }
 
     private func applyConstrants() {
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+            collection.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            collection.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            collection.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            collection.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

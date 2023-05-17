@@ -6,11 +6,13 @@ target 'RXswift' do
   use_frameworks!
 
   # Pods for RXswift
+  
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxDataSources'
   pod 'Moya'
   pod 'Moya/RxSwift'
   pod 'Alamofire'
-  pod 'SkeletonView'
+
+  pod 'lottie-ios'
 end
